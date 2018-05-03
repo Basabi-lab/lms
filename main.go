@@ -16,7 +16,7 @@ import (
 func setupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
-	controllers.NewCDHandler(r, db)
+	controllers.NewAlbumHandler(r, db)
 
 	return r
 }
@@ -33,7 +33,7 @@ func gormConnect() *gorm.DB {
 	db.LogMode(true)
 	db.Set("gorm:table_options", "ENGINE=InnoDB")
 
-	db.AutoMigrate(&models.Music{}, &models.CD{})
+	db.AutoMigrate(&models.Music{}, &models.Album{})
 
 	return db
 }

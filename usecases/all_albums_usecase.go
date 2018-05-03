@@ -8,34 +8,34 @@ import (
 	"github.com/kokoax/music_lab/domains/models"
 )
 
-type AllCDsUsecaseResult struct {
-	Cds []*models.CD
+type AllAlbumsUsecaseResult struct {
+	Cds []*models.Album
 }
 
-type AllCDsUsecase interface {
-	AllCDs(c *gin.Context) (*AllCDsUsecaseResult, error)
+type AllAlbumsUsecase interface {
+	AllAlbums(c *gin.Context) (*AllAlbumsUsecaseResult, error)
 }
 
-type allCDsUsecase struct {
+type allAlbumsUsecase struct {
 	dbs.MixInMusicRepository
 	db *gorm.DB
 }
 
-func NewAllCDsUsecase(db *gorm.DB) *allCDsUsecase {
-	return &allCDsUsecase{
+func NewAllAlbumsUsecase(db *gorm.DB) *allAlbumsUsecase {
+	return &allAlbumsUsecase{
 		db: db,
 	}
 }
 
-func NewAllCDsUsecaseResult(cds []*models.CD) *AllCDsUsecaseResult {
-	return &AllCDsUsecaseResult{
-		Cds: cds,
+func NewAllAlbumsUsecaseResult(albums []*models.Album) *AllAlbumsUsecaseResult {
+	return &AllAlbumsUsecaseResult{
+		Cds: albums,
 	}
 }
 
-func (cdu *allCDsUsecase) AllCDs(c *gin.Context) (*AllCDsUsecaseResult, error) {
-	mr := cdu.CDRepository(cdu.db)
-	cds, _ := mr.GetAll()
+func (albumu *allAlbumsUsecase) AllAlbums(c *gin.Context) (*AllAlbumsUsecaseResult, error) {
+	mr := albumu.AlbumRepository(albumu.db)
+	albums, _ := mr.GetAll()
 
-	return NewAllCDsUsecaseResult(cds), nil
+	return NewAllAlbumsUsecaseResult(albums), nil
 }

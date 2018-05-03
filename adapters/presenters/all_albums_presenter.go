@@ -8,30 +8,30 @@ import (
 	"github.com/kokoax/music_lab/usecases"
 )
 
-type AllCDsPresenter interface {
-	ToJson(acur usecases.AllCDsUsecaseResult) (*AllCDsPresenterResult, error)
+type AllAlbumsPresenter interface {
+	ToJson(acur usecases.AllAlbumsUsecaseResult) (*AllAlbumsPresenterResult, error)
 }
 
-type CDs struct {
+type Albums struct {
 }
 
-type AllCDsPresenterResult struct {
+type AllAlbumsPresenterResult struct {
 	Json []byte
 }
 
-type allCDsPresenter struct{}
+type allAlbumsPresenter struct{}
 
-func NewAllCDsPresenter(db *gorm.DB) *allCDsPresenter {
-	return &allCDsPresenter{}
+func NewAllAlbumsPresenter(db *gorm.DB) *allAlbumsPresenter {
+	return &allAlbumsPresenter{}
 }
 
-func NewAllCDsPresenterResult(json []byte) *AllCDsPresenterResult {
-	return &AllCDsPresenterResult{
+func NewAllAlbumsPresenterResult(json []byte) *AllAlbumsPresenterResult {
+	return &AllAlbumsPresenterResult{
 		Json: json,
 	}
 }
 
-func (cdu *allCDsPresenter) ToJson(acur usecases.AllCDsUsecaseResult) (*AllCDsPresenterResult, error) {
+func (albumu *allAlbumsPresenter) ToJson(acur usecases.AllAlbumsUsecaseResult) (*AllAlbumsPresenterResult, error) {
 	json, _ := json.Marshal(acur.Cds)
-	return NewAllCDsPresenterResult(json), nil
+	return NewAllAlbumsPresenterResult(json), nil
 }

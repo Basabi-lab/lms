@@ -8,44 +8,44 @@ import (
 	"github.com/kokoax/music_lab/domains/repositories"
 )
 
-type cdMysql struct {
+type albumMysql struct {
 	db *gorm.DB
 }
 
-type MixInCDRepository struct{}
+type MixInAlbumRepository struct{}
 
-func (mmr *MixInMusicRepository) CDRepository(db *gorm.DB) repositories.CDRepository {
-	return NewCDMysql(db)
+func (mmr *MixInMusicRepository) AlbumRepository(db *gorm.DB) repositories.AlbumRepository {
+	return NewAlbumMysql(db)
 }
 
-func NewCDMysql(db *gorm.DB) repositories.CDRepository {
-	return &cdMysql{
+func NewAlbumMysql(db *gorm.DB) repositories.AlbumRepository {
+	return &albumMysql{
 		db: db,
 	}
 }
 
-func (c *cdMysql) GetByID(id int64) (*models.CD, error) {
-	cd := &models.CD{}
-	err := c.db.Find(&cd, "id = ?", id).Error
+func (c *albumMysql) GetByID(id int64) (*models.Album, error) {
+	album := &models.Album{}
+	err := c.db.Find(&album, "id = ?", id).Error
 
-	return cd, err
+	return album, err
 }
 
-func (c *cdMysql) GetAll() ([]*models.CD, error) {
-	cds := []*models.CD{}
-	err := c.db.Find(cds).Error
+func (c *albumMysql) GetAll() ([]*models.Album, error) {
+	albums := []*models.Album{}
+	err := c.db.Find(albums).Error
 
-	return cds, err
+	return albums, err
 }
 
-func (c *cdMysql) Create(cd *models.CD) (int64, error) {
-	err := c.db.Create(&cd).Error
+func (c *albumMysql) Create(album *models.Album) (int64, error) {
+	err := c.db.Create(&album).Error
 
 	return 0, err
 }
 
-type CDRepository interface {
-	GetByID(id int64) (*models.CD, error)
-	GetAll() ([]*models.CD, error)
-	Create(cd *models.CD) (int64, error)
+type AlbumRepository interface {
+	GetByID(id int64) (*models.Album, error)
+	GetAll() ([]*models.Album, error)
+	Create(album *models.Album) (int64, error)
 }

@@ -8,31 +8,31 @@ import (
 	"github.com/kokoax/music_lab/usecases"
 )
 
-type CDHandler struct {
-	usecases.AllCDsUsecase
-	presenters.AllCDsPresenter
+type AlbumHandler struct {
+	usecases.AllAlbumsUsecase
+	presenters.AllAlbumsPresenter
 }
 
-func (h *CDHandler) getAllCDs(c *gin.Context) {
-	cds, _ := h.AllCDs(c)
-	json, _ := h.ToJson(*cds)
+func (h *AlbumHandler) getAllAlbums(c *gin.Context) {
+	albums, _ := h.AllAlbums(c)
+	json, _ := h.ToJson(*albums)
 
 	c.Writer.Header().Set("Content-Type", "application/json")
 	c.Writer.WriteHeader(200)
 	c.Writer.Write(json.Json)
 }
 
-func (h *CDHandler) getWithId(c *gin.Context) {
+func (h *AlbumHandler) getWithId(c *gin.Context) {
 	// TODO: contextからIDを取り出してGetByIDに渡す
 	// info, _ := h.GetById()
 	// h.GetWithID(info)
 }
 
-func NewCDHandler(r *gin.Engine, db *gorm.DB) {
-	handler := CDHandler{
-		usecases.NewAllCDsUsecase(db),
-		presenters.NewAllCDsPresenter(db),
+func NewAlbumHandler(r *gin.Engine, db *gorm.DB) {
+	handler := AlbumHandler{
+		usecases.NewAllAlbumsUsecase(db),
+		presenters.NewAllAlbumsPresenter(db),
 	}
-	r.GET("/cd", handler.getAllCDs)
-	r.GET("/cd/:id", handler.getWithId)
+	r.GET("/album", handler.getAllAlbums)
+	r.GET("/album/:id", handler.getWithId)
 }
