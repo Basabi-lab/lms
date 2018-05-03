@@ -4,8 +4,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
-	"github.com/basabi-lab/lms/domains/models"
-	"github.com/basabi-lab/lms/domains/repositories"
+	"github.com/Basabi-lab/lms/domains/models"
+	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type albumMysql struct {

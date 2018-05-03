@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
 
-	"github.com/basabi-lab/lms/domains/models"
+	"github.com/Basabi-lab/lms/domains/models"
 )
 
 func TestCocktailCreate(t *testing.T) {

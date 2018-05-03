@@ -1,6 +1,6 @@
 package repositories
 
-import "github.com/basabi-lab/lms/domains/models"
+import "github.com/Basabi-lab/lms/domains/models"
 
 type AlbumRepository interface {
 	GetByID(id int64) (*models.Album, error)

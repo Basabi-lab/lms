@@ -9,8 +9,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
-	"github.com/basabi-lab/lms/adapters/controllers"
-	"github.com/basabi-lab/lms/domains/models"
+	"github.com/Basabi-lab/lms/adapters/controllers"
+	"github.com/Basabi-lab/lms/domains/models"
 )
 
 func setupRouter(db *gorm.DB) *gin.Engine {
