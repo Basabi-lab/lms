@@ -3,27 +3,36 @@ package dbs
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+
+	"github.com/kokoax/music_lab/domains/models"
+	"github.com/kokoax/music_lab/domains/repositories"
 )
 
-type MusicMysql struct {
+type musicMysql struct {
 	db *gorm.DB
 }
 
+type MixInMusicRepository struct{}
+
+func (mmr *MixInMusicRepository) MusicRepository(db *gorm.DB) repositories.MusicRepository {
+	return NewMusicMysql(db)
+}
+
 func NewMusicMysql(db *gorm.DB) repositories.MusicRepository {
-	return MusicMysql{
+	return &musicMysql{
 		db: db,
 	}
 }
 
-func (m *MusicMysql) GetByID(id int64) (*models.Music, error) {
-	music := *models.Music{}
+func (m *musicMysql) GetByID(id int64) (*models.Music, error) {
+	music := &models.Music{}
 	err := m.db.Find(&music).Error
 
 	return music, err
 }
 
-func (m *MusicMysql) Create(music *models.Music) error {
+func (m *musicMysql) Create(music *models.Music) (int64, error) {
 	err := m.db.Create(&music).Error
 
-	return err
+	return 0, err
 }

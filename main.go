@@ -13,7 +13,7 @@ import (
 	"github.com/kokoax/music_lab/domains/models"
 )
 
-func setupRouter(orm *gorm.DB) *gin.Engine {
+func setupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
 	controllers.NewCDHandler(r, db)
