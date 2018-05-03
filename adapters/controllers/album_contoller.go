@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
-	"github.com/kokoax/music_lab/adapters/presenters"
-	"github.com/kokoax/music_lab/usecases"
+	"github.com/basabi-lab/lms/adapters/presenters"
+	"github.com/basabi-lab/lms/usecases"
 )
 
 type AlbumHandler struct {

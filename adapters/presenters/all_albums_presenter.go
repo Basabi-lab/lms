@@ -5,7 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/kokoax/music_lab/usecases"
+	"github.com/basabi-lab/lms/usecases"
 )
 
 type AllAlbumsPresenter interface {

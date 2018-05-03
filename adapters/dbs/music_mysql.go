@@ -4,8 +4,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
-	"github.com/kokoax/music_lab/domains/models"
-	"github.com/kokoax/music_lab/domains/repositories"
+	"github.com/basabi-lab/lms/domains/models"
+	"github.com/basabi-lab/lms/domains/repositories"
 )
 
 type musicMysql struct {

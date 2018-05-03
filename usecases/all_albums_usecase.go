@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
-	"github.com/kokoax/music_lab/adapters/dbs"
-	"github.com/kokoax/music_lab/domains/models"
+	"github.com/basabi-lab/lms/adapters/dbs"
+	"github.com/basabi-lab/lms/domains/models"
 )
 
 type AllAlbumsUsecaseResult struct {
