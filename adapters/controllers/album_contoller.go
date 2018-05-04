@@ -9,12 +9,12 @@ import (
 )
 
 type AlbumHandler struct {
-	usecases.AllAlbumsUsecase
-	presenters.AllAlbumsPresenter
+	usecases.AllAlbumUsecase
+	presenters.AllAlbumPresenter
 }
 
-func (h *AlbumHandler) getAllAlbums(c *gin.Context) {
-	albums, _ := h.AllAlbums(c)
+func (h *AlbumHandler) getAllAlbum(c *gin.Context) {
+	albums, _ := h.AllAlbum(c)
 	json, _ := h.ToJson(*albums)
 
 	c.Writer.Header().Set("Content-Type", "application/json")
@@ -30,9 +30,9 @@ func (h *AlbumHandler) getWithId(c *gin.Context) {
 
 func NewAlbumHandler(r *gin.Engine, db *gorm.DB) {
 	handler := AlbumHandler{
-		usecases.NewAllAlbumsUsecase(db),
-		presenters.NewAllAlbumsPresenter(db),
+		usecases.NewAllAlbumUsecase(db),
+		presenters.NewAllAlbumPresenter(db),
 	}
-	r.GET("/album", handler.getAllAlbums)
+	r.GET("/album", handler.getAllAlbum)
 	r.GET("/album/:id", handler.getWithId)
 }
