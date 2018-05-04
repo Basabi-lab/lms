@@ -12,12 +12,6 @@ type albumMysql struct {
 	db *gorm.DB
 }
 
-type MixInAlbumRepository struct{}
-
-func (mmr *MixInAlbumRepository) AlbumRepository(db *gorm.DB) repositories.AlbumRepository {
-	return NewAlbumMysql(db)
-}
-
 func NewAlbumMysql(db *gorm.DB) repositories.AlbumRepository {
 	return &albumMysql{
 		db: db,
