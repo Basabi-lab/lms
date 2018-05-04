@@ -40,10 +40,6 @@ func newAlbumMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 	}
 }
 
-func AlbumRepositoryMock(db *gorm.DB) repositories.AlbumRepository {
-	return newAlbumMysqlMock(db)
-}
-
 func TestAllAlbumUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	aau := NewAllAlbumUsecase(newAlbumMysqlMock(db))

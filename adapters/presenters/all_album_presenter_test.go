@@ -3,9 +3,10 @@ package presenters
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/usecases"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestAllAlbumToJson(t *testing.T) {
