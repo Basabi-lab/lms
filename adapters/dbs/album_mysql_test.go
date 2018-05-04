@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/stretchr/testify/assert"
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
@@ -12,32 +11,28 @@ import (
 	"github.com/Basabi-lab/lms/domains/models"
 )
 
-func TestCocktailCreate(t *testing.T) {
-	db, mock := connectDB("test_get_all")
-	cr := NewMysqlCocktailRepository(db)
-	now := time.Now()
+func TestAlbumGetAll(t *testing.T) {
+	db, mock := connectDB("test_album_get_all")
 	defer db.Close()
 
-	gm := gorm.Model{
-		ID:        0,
-		CreatedAt: now,
-		UpdatedAt: now,
-		DeletedAt: &now,
-	}
+	ar := NewAlbumMysql(db)
 
 	album := models.Album{
-		Model:  gm,
+		Model:  newGormModel(0, time.Now()),
 		Title:  "Album title",
 		Artist: "Album Artist",
 		Genre:  "Album Genre",
 		Year:   2000,
 	}
 
-	var cockCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title", "artist", "genre", "year"}
-	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(cockCols).
+	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title", "artist", "genre", "year"}
+	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
 		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.Title, album.Artist, album.Genre, album.Year))
 
-	albums, err := cr.GetAll()
-
+	albums, err := ar.GetAll()
 	assert.NoError(t, err)
+
+	expect := []*models.Album{}
+	expect = append(expect, &album)
+	assert.Equal(t, expect, albums)
 }
