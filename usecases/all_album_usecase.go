@@ -2,40 +2,37 @@ package usecases
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 
-	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/domains/models"
+	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type AllAlbumUsecaseResult struct {
-	Cds []*models.Album
+	Albums []*models.Album
 }
 
-type AllAlbumUsecase interface {
+type AllAlbumUsecaseExt interface {
 	AllAlbum(c *gin.Context) (*AllAlbumUsecaseResult, error)
 }
 
 type allAlbumUsecase struct {
-	dbs.MixInAlbumRepository
-	db *gorm.DB
+	ar repositories.AlbumRepository
 }
 
-func NewAllAlbumUsecase(db *gorm.DB) *allAlbumUsecase {
+func NewAllAlbumUsecase(ar repositories.AlbumRepository) AllAlbumUsecaseExt {
 	return &allAlbumUsecase{
-		db: db,
+		ar: ar,
 	}
 }
 
 func NewAllAlbumUsecaseResult(albums []*models.Album) *AllAlbumUsecaseResult {
 	return &AllAlbumUsecaseResult{
-		Cds: albums,
+		Albums: albums,
 	}
 }
 
 func (albumu *allAlbumUsecase) AllAlbum(c *gin.Context) (*AllAlbumUsecaseResult, error) {
-	mr := albumu.AlbumRepository(albumu.db)
-	albums, _ := mr.GetAll()
+	albums, err := albumu.ar.GetAll()
 
-	return NewAllAlbumUsecaseResult(albums), nil
+	return NewAllAlbumUsecaseResult(albums), err
 }
