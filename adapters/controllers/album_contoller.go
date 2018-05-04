@@ -5,16 +5,26 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 
-	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/adapters/presenters"
 	"github.com/Basabi-lab/lms/usecases"
 )
 
-type AlbumController struct {
+type AlbumControllerExt interface {
+	GetAllAlbum(c *gin.Context)
+	GetWithId(c *gin.Context)
+}
+
+type albumController struct {
 	aau usecases.AllAlbumUsecaseExt
 	aap presenters.AllAlbumPresenterExt
+}
+
+func NewAlbumController(aau usecases.AllAlbumUsecaseExt, aap presenters.AllAlbumPresenterExt) AlbumControllerExt {
+	return &albumController{
+		aau: aau,
+		aap: aap,
+	}
 }
 
 func ResponseError(c *gin.Context, err error) {
@@ -22,7 +32,7 @@ func ResponseError(c *gin.Context, err error) {
 	c.JSON(http.StatusInternalServerError, gin.H{"Error": err})
 }
 
-func (h *AlbumController) getAllAlbum(c *gin.Context) {
+func (h *albumController) GetAllAlbum(c *gin.Context) {
 	albums, err := h.aau.AllAlbum(c)
 	if err != nil {
 		ResponseError(c, err)
@@ -41,18 +51,9 @@ func (h *AlbumController) getAllAlbum(c *gin.Context) {
 	}
 }
 
-func (h *AlbumController) getWithId(c *gin.Context) {
+func (h *albumController) GetWithId(c *gin.Context) {
 	// TODO: contextからIDを取り出してGetByIDに渡す
 	// info, _ := h.GetById()
 	// h.GetWithID(info)
 	ResponseError(c, errors.New("not implement"))
-}
-
-func NewAlbumController(r *gin.Engine, db *gorm.DB) {
-	controller := AlbumController{
-		usecases.NewAllAlbumUsecase(dbs.NewAlbumMysql(db)),
-		presenters.NewAllAlbumPresenter(),
-	}
-	r.GET("/album", controller.getAllAlbum)
-	r.GET("/album/:id", controller.getWithId)
 }
