@@ -3,35 +3,30 @@ package presenters
 import (
 	"encoding/json"
 
-	"github.com/jinzhu/gorm"
-
 	"github.com/Basabi-lab/lms/usecases"
 )
 
-type AllAlbumPresenter interface {
-	ToJson(acur usecases.AllAlbumUsecaseResult) (*AllAlbumPresenterResult, error)
-}
-
-type Album struct {
+type AllAlbumPresenterExt interface {
+	ToByteList(acur usecases.AllAlbumUsecaseResult) (*AllAlbumPresenterResult, error)
 }
 
 type AllAlbumPresenterResult struct {
-	Json []byte
+	JsonByteList []byte
 }
 
 type allAlbumPresenter struct{}
 
-func NewAllAlbumPresenter(db *gorm.DB) *allAlbumPresenter {
+func NewAllAlbumPresenter() AllAlbumPresenterExt {
 	return &allAlbumPresenter{}
 }
 
 func NewAllAlbumPresenterResult(json []byte) *AllAlbumPresenterResult {
 	return &AllAlbumPresenterResult{
-		Json: json,
+		JsonByteList: json,
 	}
 }
 
-func (albumu *allAlbumPresenter) ToJson(acur usecases.AllAlbumUsecaseResult) (*AllAlbumPresenterResult, error) {
-	json, _ := json.Marshal(acur.Cds)
+func (albumu *allAlbumPresenter) ToByteList(acur usecases.AllAlbumUsecaseResult) (*AllAlbumPresenterResult, error) {
+	json, _ := json.Marshal(acur.Albums)
 	return NewAllAlbumPresenterResult(json), nil
 }
