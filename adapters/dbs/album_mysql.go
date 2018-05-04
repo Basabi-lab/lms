@@ -14,7 +14,7 @@ type albumMysql struct {
 
 type MixInAlbumRepository struct{}
 
-func (mmr *MixInMusicRepository) AlbumRepository(db *gorm.DB) repositories.AlbumRepository {
+func (mmr *MixInAlbumRepository) AlbumRepository(db *gorm.DB) repositories.AlbumRepository {
 	return NewAlbumMysql(db)
 }
 

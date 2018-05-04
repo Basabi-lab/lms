@@ -33,7 +33,7 @@ func gormConnect() *gorm.DB {
 	db.LogMode(true)
 	db.Set("gorm:table_options", "ENGINE=InnoDB")
 
-	db.AutoMigrate(&models.Music{}, &models.Album{})
+	db.AutoMigrate(&models.Song{}, &models.Album{})
 
 	return db
 }

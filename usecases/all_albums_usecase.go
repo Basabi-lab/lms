@@ -17,7 +17,7 @@ type AllAlbumsUsecase interface {
 }
 
 type allAlbumsUsecase struct {
-	dbs.MixInMusicRepository
+	dbs.MixInAlbumRepository
 	db *gorm.DB
 }
 

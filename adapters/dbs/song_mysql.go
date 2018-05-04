@@ -8,31 +8,31 @@ import (
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
-type musicMysql struct {
+type songMysql struct {
 	db *gorm.DB
 }
 
-type MixInMusicRepository struct{}
+type MixInSongRepository struct{}
 
-func (mmr *MixInMusicRepository) MusicRepository(db *gorm.DB) repositories.MusicRepository {
-	return NewMusicMysql(db)
+func (mmr *MixInSongRepository) SongRepository(db *gorm.DB) repositories.SongRepository {
+	return NewSongMysql(db)
 }
 
-func NewMusicMysql(db *gorm.DB) repositories.MusicRepository {
-	return &musicMysql{
+func NewSongMysql(db *gorm.DB) repositories.SongRepository {
+	return &songMysql{
 		db: db,
 	}
 }
 
-func (m *musicMysql) GetByID(id int64) (*models.Music, error) {
-	music := &models.Music{}
-	err := m.db.Find(&music).Error
+func (m *songMysql) GetByID(id int64) (*models.Song, error) {
+	song := &models.Song{}
+	err := m.db.Find(&song).Error
 
-	return music, err
+	return song, err
 }
 
-func (m *musicMysql) Create(music *models.Music) (int64, error) {
-	err := m.db.Create(&music).Error
+func (m *songMysql) Create(song *models.Song) (int64, error) {
+	err := m.db.Create(&song).Error
 
 	return 0, err
 }
