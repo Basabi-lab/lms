@@ -18,16 +18,15 @@ func TestAlbumGetAll(t *testing.T) {
 	ar := NewAlbumMysql(db)
 
 	album := models.Album{
-		Model:  newGormModel(0, time.Now()),
-		Title:  "Album title",
-		Artist: "Album Artist",
-		Genre:  "Album Genre",
-		Year:   2000,
+		Model: newGormModel(0, time.Now()),
+		Title: "Album title",
+		Genre: "Album Genre",
+		Year:  2000,
 	}
 
-	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title", "artist", "genre", "year"}
+	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title", "genre", "year"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
-		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.Title, album.Artist, album.Genre, album.Year))
+		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.Title, album.Genre, album.Year))
 
 	albums, err := ar.GetAll()
 	assert.NoError(t, err)
