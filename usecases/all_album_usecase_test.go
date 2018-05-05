@@ -55,7 +55,7 @@ func TestAllAlbumUsecase(t *testing.T) {
 		Albums: albums,
 	}
 
-	albumsResult, err := aau.AllAlbum(&gin.Context{})
+	albumsResult, err := aau.All(&gin.Context{})
 	assert.NoError(t, err)
 
 	assert.Equal(t, expect, albumsResult)

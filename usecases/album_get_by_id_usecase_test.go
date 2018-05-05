@@ -53,7 +53,9 @@ func TestAlbumGetByIDUsecase(t *testing.T) {
 		Album: album,
 	}
 
-	albumResult, err := aau.AlbumGetByID(&gin.Context{})
+	c := &gin.Context{}
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "10"}}
+	albumResult, err := aau.GetByID(c)
 	assert.NoError(t, err)
 
 	assert.Equal(t, expect, albumResult)

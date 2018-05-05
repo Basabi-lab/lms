@@ -14,7 +14,7 @@ type AlbumGetByIDUsecaseResult struct {
 }
 
 type AlbumGetByIDUsecaseExt interface {
-	AlbumGetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error)
+	GetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error)
 }
 
 type albumGetByIDUsecase struct {
@@ -33,7 +33,7 @@ func NewAlbumGetByIDUsecaseResult(album *models.Album) *AlbumGetByIDUsecaseResul
 	}
 }
 
-func (albumu *albumGetByIDUsecase) AlbumGetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error) {
+func (albumu *albumGetByIDUsecase) GetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
 	album, err := albumu.ar.GetByID(id)
 

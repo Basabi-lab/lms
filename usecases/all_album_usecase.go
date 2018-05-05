@@ -12,7 +12,7 @@ type AllAlbumUsecaseResult struct {
 }
 
 type AllAlbumUsecaseExt interface {
-	AllAlbum(c *gin.Context) (*AllAlbumUsecaseResult, error)
+	All(c *gin.Context) (*AllAlbumUsecaseResult, error)
 }
 
 type allAlbumUsecase struct {
@@ -31,7 +31,7 @@ func NewAllAlbumUsecaseResult(albums []*models.Album) *AllAlbumUsecaseResult {
 	}
 }
 
-func (albumu *allAlbumUsecase) AllAlbum(c *gin.Context) (*AllAlbumUsecaseResult, error) {
+func (albumu *allAlbumUsecase) All(c *gin.Context) (*AllAlbumUsecaseResult, error) {
 	albums, err := albumu.ar.GetAll()
 
 	return NewAllAlbumUsecaseResult(albums), err
