@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/Basabi-lab/lms/adapters/presenters"
@@ -15,19 +13,29 @@ type AlbumControllerExt interface {
 }
 
 type albumController struct {
-	aau usecases.AllAlbumUsecaseExt
-	aap presenters.AllAlbumPresenterExt
+	aau   usecases.AllAlbumUsecaseExt
+	aap   presenters.AllAlbumPresenterExt
+	agbiu usecases.AlbumGetByIDUsecaseExt
+	agbip presenters.AlbumGetByIDPresenterExt
 }
 
-func NewAlbumController(aau usecases.AllAlbumUsecaseExt, aap presenters.AllAlbumPresenterExt) AlbumControllerExt {
+func NewAlbumController(
+	aau usecases.AllAlbumUsecaseExt,
+	aap presenters.AllAlbumPresenterExt,
+	agbiu usecases.AlbumGetByIDUsecaseExt,
+	agbip presenters.AlbumGetByIDPresenterExt,
+) AlbumControllerExt {
+
 	return &albumController{
-		aau: aau,
-		aap: aap,
+		aau:   aau,
+		aap:   aap,
+		agbiu: agbiu,
+		agbip: agbip,
 	}
 }
 
 func (h *albumController) GetAllAlbum(c *gin.Context) {
-	albums, err := h.aau.AllAlbum(c)
+	albums, err := h.aau.All(c)
 	if err != nil {
 		ResponseError(c, err)
 	}
@@ -46,8 +54,20 @@ func (h *albumController) GetAllAlbum(c *gin.Context) {
 }
 
 func (h *albumController) GetWithId(c *gin.Context) {
-	// TODO: contextからIDを取り出してGetByIDに渡す
-	// info, _ := h.GetById()
-	// h.GetWithID(info)
-	ResponseError(c, fmt.Errorf("not implement"))
+	album, err := h.agbiu.GetByID(c)
+	if err != nil {
+		ResponseError(c, err)
+	}
+
+	json, err := h.agbip.ToByteList(*album)
+	if err != nil {
+		ResponseError(c, err)
+	}
+
+	c.Writer.Header().Set("Content-Type", "application/json")
+	c.Writer.WriteHeader(200)
+	_, err = c.Writer.Write(json.JsonByteList)
+	if err != nil {
+		ResponseError(c, err)
+	}
 }

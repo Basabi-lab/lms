@@ -23,8 +23,10 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 
 	aac := usecases.NewAllAlbumUsecase(ar)
 	aap := presenters.NewAllAlbumPresenter()
+	agbiu := usecases.NewAlbumGetByIDUsecase(ar)
+	agbip := presenters.NewAlbumGetByIDPresenter()
 
-	ac := controllers.NewAlbumController(aac, aap)
+	ac := controllers.NewAlbumController(aac, aap, agbiu, agbip)
 
 	r.GET("/album", ac.GetAllAlbum)
 	r.GET("/album/:id", ac.GetWithId)
