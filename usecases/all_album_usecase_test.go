@@ -15,7 +15,7 @@ type albumMysqlMock struct {
 	db *gorm.DB
 }
 
-func (amm *albumMysqlMock) GetByID(id int64) (*models.Album, error) {
+func (amm *albumMysqlMock) GetByID(id uint) (*models.Album, error) {
 	return nil, nil
 }
 
@@ -29,7 +29,7 @@ func (amm *albumMysqlMock) GetAll() ([]*models.Album, error) {
 	return []*models.Album{&album}, nil
 }
 
-func (amm *albumMysqlMock) Create(cd *models.Album) (int64, error) {
+func (amm *albumMysqlMock) Create(cd *models.Album) (uint, error) {
 	return 0, nil
 }
 
