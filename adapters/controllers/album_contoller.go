@@ -1,8 +1,7 @@
 package controllers
 
 import (
-	"errors"
-	"net/http"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 
@@ -25,11 +24,6 @@ func NewAlbumController(aau usecases.AllAlbumUsecaseExt, aap presenters.AllAlbum
 		aau: aau,
 		aap: aap,
 	}
-}
-
-func ResponseError(c *gin.Context, err error) {
-	c.Error(err)
-	c.JSON(http.StatusInternalServerError, gin.H{"Error": err})
 }
 
 func (h *albumController) GetAllAlbum(c *gin.Context) {
@@ -55,5 +49,5 @@ func (h *albumController) GetWithId(c *gin.Context) {
 	// TODO: contextからIDを取り出してGetByIDに渡す
 	// info, _ := h.GetById()
 	// h.GetWithID(info)
-	ResponseError(c, errors.New("not implement"))
+	ResponseError(c, fmt.Errorf("not implement"))
 }
