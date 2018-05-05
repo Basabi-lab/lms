@@ -10,13 +10,24 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	"github.com/Basabi-lab/lms/adapters/controllers"
+	"github.com/Basabi-lab/lms/adapters/dbs"
+	"github.com/Basabi-lab/lms/adapters/presenters"
 	"github.com/Basabi-lab/lms/domains/models"
+	"github.com/Basabi-lab/lms/usecases"
 )
 
 func setupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
-	controllers.NewAlbumHandler(r, db)
+	ar := dbs.NewAlbumMysql(db)
+
+	aac := usecases.NewAllAlbumUsecase(ar)
+	aap := presenters.NewAllAlbumPresenter()
+
+	ac := controllers.NewAlbumController(aac, aap)
+
+	r.GET("/album", ac.GetAllAlbum)
+	r.GET("/album/:id", ac.GetWithId)
 
 	return r
 }
@@ -33,7 +44,7 @@ func gormConnect() *gorm.DB {
 	db.LogMode(true)
 	db.Set("gorm:table_options", "ENGINE=InnoDB")
 
-	db.AutoMigrate(&models.Music{}, &models.Album{})
+	db.AutoMigrate(&models.Song{}, &models.Album{})
 
 	return db
 }

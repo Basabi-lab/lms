@@ -1,38 +1,53 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 
 	"github.com/Basabi-lab/lms/adapters/presenters"
 	"github.com/Basabi-lab/lms/usecases"
 )
 
-type AlbumHandler struct {
-	usecases.AllAlbumsUsecase
-	presenters.AllAlbumsPresenter
+type AlbumControllerExt interface {
+	GetAllAlbum(c *gin.Context)
+	GetWithId(c *gin.Context)
 }
 
-func (h *AlbumHandler) getAllAlbums(c *gin.Context) {
-	albums, _ := h.AllAlbums(c)
-	json, _ := h.ToJson(*albums)
+type albumController struct {
+	aau usecases.AllAlbumUsecaseExt
+	aap presenters.AllAlbumPresenterExt
+}
+
+func NewAlbumController(aau usecases.AllAlbumUsecaseExt, aap presenters.AllAlbumPresenterExt) AlbumControllerExt {
+	return &albumController{
+		aau: aau,
+		aap: aap,
+	}
+}
+
+func (h *albumController) GetAllAlbum(c *gin.Context) {
+	albums, err := h.aau.AllAlbum(c)
+	if err != nil {
+		ResponseError(c, err)
+	}
+
+	json, err := h.aap.ToByteList(*albums)
+	if err != nil {
+		ResponseError(c, err)
+	}
 
 	c.Writer.Header().Set("Content-Type", "application/json")
 	c.Writer.WriteHeader(200)
-	c.Writer.Write(json.Json)
+	_, err = c.Writer.Write(json.JsonByteList)
+	if err != nil {
+		ResponseError(c, err)
+	}
 }
 
-func (h *AlbumHandler) getWithId(c *gin.Context) {
+func (h *albumController) GetWithId(c *gin.Context) {
 	// TODO: contextからIDを取り出してGetByIDに渡す
 	// info, _ := h.GetById()
 	// h.GetWithID(info)
-}
-
-func NewAlbumHandler(r *gin.Engine, db *gorm.DB) {
-	handler := AlbumHandler{
-		usecases.NewAllAlbumsUsecase(db),
-		presenters.NewAllAlbumsPresenter(db),
-	}
-	r.GET("/album", handler.getAllAlbums)
-	r.GET("/album/:id", handler.getWithId)
+	ResponseError(c, fmt.Errorf("not implement"))
 }
