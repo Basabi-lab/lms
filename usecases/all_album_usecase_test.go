@@ -11,44 +11,42 @@ import (
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
-type albumMysqlMock struct {
+type allAlbumMysqlMock struct {
 	db *gorm.DB
 }
 
-func (amm *albumMysqlMock) GetByID(id int64) (*models.Album, error) {
+func newAllAlbumMysqlMock(db *gorm.DB) repositories.AlbumRepository {
+	return &allAlbumMysqlMock{
+		db: db,
+	}
+}
+
+func (amm *allAlbumMysqlMock) GetByID(id uint64) (*models.Album, error) {
 	return nil, nil
 }
 
-func (amm *albumMysqlMock) GetAll() ([]*models.Album, error) {
+func (amm *allAlbumMysqlMock) GetAll() ([]*models.Album, error) {
 	album := models.Album{
-		Title:  "Album title",
-		Artist: "Album Artist",
-		Genre:  "Album Genre",
-		Year:   2000,
+		Title: "Album title",
+		Genre: "Album Genre",
+		Year:  2000,
 	}
 
 	return []*models.Album{&album}, nil
 }
 
-func (amm *albumMysqlMock) Create(cd *models.Album) (int64, error) {
+func (amm *allAlbumMysqlMock) Create(cd *models.Album) (uint64, error) {
 	return 0, nil
-}
-
-func newAlbumMysqlMock(db *gorm.DB) repositories.AlbumRepository {
-	return &albumMysqlMock{
-		db: db,
-	}
 }
 
 func TestAllAlbumUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	aau := NewAllAlbumUsecase(newAlbumMysqlMock(db))
+	aau := NewAllAlbumUsecase(newAllAlbumMysqlMock(db))
 
 	album := models.Album{
-		Title:  "Album title",
-		Artist: "Album Artist",
-		Genre:  "Album Genre",
-		Year:   2000,
+		Title: "Album title",
+		Genre: "Album Genre",
+		Year:  2000,
 	}
 
 	albums := []*models.Album{}
@@ -57,7 +55,7 @@ func TestAllAlbumUsecase(t *testing.T) {
 		Albums: albums,
 	}
 
-	albumsResult, err := aau.AllAlbum(&gin.Context{})
+	albumsResult, err := aau.All(&gin.Context{})
 	assert.NoError(t, err)
 
 	assert.Equal(t, expect, albumsResult)

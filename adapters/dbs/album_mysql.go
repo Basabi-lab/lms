@@ -18,9 +18,9 @@ func NewAlbumMysql(db *gorm.DB) repositories.AlbumRepository {
 	}
 }
 
-func (c *albumMysql) GetByID(id int64) (*models.Album, error) {
+func (c *albumMysql) GetByID(id uint64) (*models.Album, error) {
 	album := &models.Album{}
-	err := c.db.Find(&album, "id = ?", id).Error
+	err := c.db.First(&album, "id = ?", id).Error
 
 	return album, err
 }
@@ -32,7 +32,7 @@ func (c *albumMysql) GetAll() ([]*models.Album, error) {
 	return albums, err
 }
 
-func (c *albumMysql) Create(album *models.Album) (int64, error) {
+func (c *albumMysql) Create(album *models.Album) (uint64, error) {
 	err := c.db.Create(&album).Error
 
 	return 0, err
