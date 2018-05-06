@@ -8,7 +8,7 @@ import (
 )
 
 type AlbumCreateUsecaseResult struct {
-	id uint64
+	ID uint
 }
 
 type AlbumCreateUsecaseExt interface {
@@ -25,9 +25,9 @@ func NewAlbumCreateUsecase(ar repositories.AlbumRepository) AlbumCreateUsecaseEx
 	}
 }
 
-func NewAlbumCreateUsecaseResult(id uint64) *AlbumCreateUsecaseResult {
+func NewAlbumCreateUsecaseResult(id uint) *AlbumCreateUsecaseResult {
 	return &AlbumCreateUsecaseResult{
-		id: id,
+		ID: id,
 	}
 }
 

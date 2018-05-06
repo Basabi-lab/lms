@@ -8,5 +8,5 @@ type Album struct {
 	Artist *Artist `json:artist`
 	Title  string  `json:title`
 	Genre  string  `json:genre`
-	Year   int     `json:year`
+	Year   uint    `json:year`
 }
