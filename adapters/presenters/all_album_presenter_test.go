@@ -23,7 +23,7 @@ func TestAllAlbumToJson(t *testing.T) {
 	}
 	albums := []*models.Album{}
 	albums = append(albums, &album1, &album2)
-	usecaseResult := usecases.AllAlbumUsecaseResult{
+	usecaseResult := &usecases.AllAlbumUsecaseResult{
 		Albums: albums,
 	}
 

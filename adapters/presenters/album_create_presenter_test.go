@@ -11,7 +11,7 @@ import (
 
 func TestAlbumCreateResponse(t *testing.T) {
 	aap := NewAlbumCreatePresenter()
-	usecaseResult := usecases.AlbumCreateUsecaseResult{
+	usecaseResult := &usecases.AlbumCreateUsecaseResult{
 		ID: uint(0),
 	}
 

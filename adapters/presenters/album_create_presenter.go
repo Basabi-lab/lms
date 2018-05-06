@@ -7,7 +7,7 @@ import (
 )
 
 type AlbumCreatePresenterExt interface {
-	Response(acur usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error)
+	Response(acur *usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error)
 }
 
 type AlbumCreatePresenterResult struct {
@@ -26,7 +26,7 @@ func NewAlbumCreatePresenterResult(res *gin.H) *AlbumCreatePresenterResult {
 	}
 }
 
-func (albumu *albumCreatePresenter) Response(acur usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error) {
+func (albumu *albumCreatePresenter) Response(acur *usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error) {
 	res := &gin.H{"message": "success", "id": acur.ID}
 
 	return NewAlbumCreatePresenterResult(res), nil
