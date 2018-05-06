@@ -1,0 +1,152 @@
+swagger: '2.0'
+info:
+  description: this is lab music server(lms) API document
+  version: 1.0.0
+  title: lms
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: Album API
+    description: Access to Album information
+schemes:
+  - http
+paths:
+  /album:
+    get:
+      tags:
+        - Album API
+      summary: Get all album info
+      description: Get all album information from server side.
+      parameters:
+        - name: sort with from to limit
+          in: body
+          description: get album between param from to
+          required: false
+          schema:
+            type: object
+            properties:
+              sort:
+                type: string
+                format: string
+                example: new
+              from:
+                type: integer
+                format: int64
+                example: 0
+              to:
+                type: integer
+                format: int64
+                example: 10
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  example: 0
+                title:
+                  type: string
+                  example: album title
+                artist_id:
+                  type: integer
+                  format: int64
+                  example: 0
+                genre:
+                  type: string
+                  example: Rock
+                year:
+                  type: integer
+                  format: int64
+                  example: 2000
+    post:
+      tags:
+        - Album API
+      summary: Post album info to the server side.
+      description: a
+      parameters:
+        - name: sort with from to limit
+          in: body
+          description: get album between param from to
+          required: false
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                format: string
+                example: album1
+              genre:
+                type: string
+                format: string
+                example: Rock
+              year:
+                type: integer
+                format: int64
+                example: 2000
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+                example: success
+              id:
+                type: integer
+                format: int64
+                example: 0
+              
+  /album/{album_id}:
+    get:
+      tags:
+        - Album API
+      summary: Get album info by album_id
+      description: todo add
+      parameters:
+        - name: album_id
+          in: path
+          description: album id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                example: 0
+              title:
+                type: string
+                example: album title
+              artist_id:
+                type: integer
+                format: int64
+                example: 0
+              genre:
+                type: string
+                example: Rock
+              year:
+                type: integer
+                format: int64
+                example: 2000
+        '500':
+          description: not exist album the id
+          schema:
+            type: object
+            properties:
+              Error:
+                type: string
+                format: string
