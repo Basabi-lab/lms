@@ -1,1 +1,1 @@
-PORT=8080 CLEARDB_DATABASE_URL="mysql://$(user):$(password)@/$(dbname)" ./music_lab
+PORT=8080 CLEARDB_DATABASE_URL="mysql://$(user):$(password)@/$(dbname)" ./lms
