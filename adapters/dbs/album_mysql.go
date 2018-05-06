@@ -35,5 +35,5 @@ func (c *albumMysql) GetAll() ([]*models.Album, error) {
 func (c *albumMysql) Create(album *models.Album) (uint, error) {
 	err := c.db.Create(&album).Error
 
-	return 0, err
+	return album.ID, err
 }

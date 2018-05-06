@@ -25,18 +25,28 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 	aap := presenters.NewAllAlbumPresenter()
 	agbiu := usecases.NewAlbumGetByIDUsecase(ar)
 	agbip := presenters.NewAlbumGetByIDPresenter()
+	acc := usecases.NewAlbumCreateUsecase(ar)
+	acp := presenters.NewAlbumCreatePresenter()
 
-	ac := controllers.NewAlbumController(aac, aap, agbiu, agbip)
+	ac := controllers.NewAlbumController(
+		aac,
+		aap,
+		agbiu,
+		agbip,
+		acc,
+		acp,
+	)
 
-	r.GET("/album", ac.GetAllAlbum)
-	r.GET("/album/:id", ac.GetWithId)
+	r.GET("/album", ac.GetAll)
+	r.GET("/album/:id", ac.GetById)
+	r.POST("/album", ac.Post)
 
 	return r
 }
 
 func gormConnect() *gorm.DB {
 	u, _ := url.Parse(os.Getenv("CLEARDB_DATABASE_URL"))
-	CONNECT := fmt.Sprintf("%s@tcp(%s:3306)%s", u.User.String(), u.Host, u.Path)
+	CONNECT := fmt.Sprintf("%s@tcp(%s:3306)%s?parseTime=true", u.User.String(), u.Host, u.Path)
 	db, err := gorm.Open("mysql", CONNECT)
 
 	if err != nil {
@@ -46,7 +56,7 @@ func gormConnect() *gorm.DB {
 	db.LogMode(true)
 	db.Set("gorm:table_options", "ENGINE=InnoDB")
 
-	db.AutoMigrate(&models.Song{}, &models.Album{})
+	db.AutoMigrate(&models.Song{}, &models.Album{}, &models.Artist{})
 
 	return db
 }
