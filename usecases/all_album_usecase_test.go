@@ -21,7 +21,7 @@ func newAllAlbumMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 	}
 }
 
-func (amm *allAlbumMysqlMock) GetByID(id uint64) (*models.Album, error) {
+func (amm *allAlbumMysqlMock) GetByID(id uint) (*models.Album, error) {
 	return nil, nil
 }
 
@@ -35,7 +35,7 @@ func (amm *allAlbumMysqlMock) GetAll() ([]*models.Album, error) {
 	return []*models.Album{&album}, nil
 }
 
-func (amm *allAlbumMysqlMock) Create(cd *models.Album) (uint64, error) {
+func (amm *allAlbumMysqlMock) Create(cd *models.Album) (uint, error) {
 	return 0, nil
 }
 

@@ -16,7 +16,7 @@ func TestAlbumGetByIDToJson(t *testing.T) {
 		Genre: "Album Genre",
 		Year:  2000,
 	}
-	usecaseResult := usecases.AlbumGetByIDUsecaseResult{
+	usecaseResult := &usecases.AlbumGetByIDUsecaseResult{
 		Album: album,
 	}
 

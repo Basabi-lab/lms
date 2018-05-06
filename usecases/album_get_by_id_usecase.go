@@ -34,8 +34,8 @@ func NewAlbumGetByIDUsecaseResult(album *models.Album) *AlbumGetByIDUsecaseResul
 }
 
 func (albumu *albumGetByIDUsecase) GetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error) {
-	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
-	album, err := albumu.ar.GetByID(id)
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
+	album, err := albumu.ar.GetByID(uint(id))
 
 	return NewAlbumGetByIDUsecaseResult(album), err
 }

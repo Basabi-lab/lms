@@ -8,8 +8,9 @@ import (
 )
 
 type AlbumControllerExt interface {
-	GetAllAlbum(c *gin.Context)
-	GetWithId(c *gin.Context)
+	GetAll(c *gin.Context)
+	GetById(c *gin.Context)
+	Post(c *gin.Context)
 }
 
 type albumController struct {
@@ -17,6 +18,8 @@ type albumController struct {
 	aap   presenters.AllAlbumPresenterExt
 	agbiu usecases.AlbumGetByIDUsecaseExt
 	agbip presenters.AlbumGetByIDPresenterExt
+	acu   usecases.AlbumCreateUsecaseExt
+	acp   presenters.AlbumCreatePresenterExt
 }
 
 func NewAlbumController(
@@ -24,6 +27,8 @@ func NewAlbumController(
 	aap presenters.AllAlbumPresenterExt,
 	agbiu usecases.AlbumGetByIDUsecaseExt,
 	agbip presenters.AlbumGetByIDPresenterExt,
+	acu usecases.AlbumCreateUsecaseExt,
+	acp presenters.AlbumCreatePresenterExt,
 ) AlbumControllerExt {
 
 	return &albumController{
@@ -31,18 +36,22 @@ func NewAlbumController(
 		aap:   aap,
 		agbiu: agbiu,
 		agbip: agbip,
+		acu:   acu,
+		acp:   acp,
 	}
 }
 
-func (h *albumController) GetAllAlbum(c *gin.Context) {
+func (h *albumController) GetAll(c *gin.Context) {
 	albums, err := h.aau.All(c)
 	if err != nil {
 		ResponseError(c, err)
+		return
 	}
 
-	json, err := h.aap.ToByteList(*albums)
+	json, err := h.aap.ToByteList(albums)
 	if err != nil {
 		ResponseError(c, err)
+		return
 	}
 
 	c.Writer.Header().Set("Content-Type", "application/json")
@@ -50,18 +59,21 @@ func (h *albumController) GetAllAlbum(c *gin.Context) {
 	_, err = c.Writer.Write(json.JsonByteList)
 	if err != nil {
 		ResponseError(c, err)
+		return
 	}
 }
 
-func (h *albumController) GetWithId(c *gin.Context) {
+func (h *albumController) GetById(c *gin.Context) {
 	album, err := h.agbiu.GetByID(c)
 	if err != nil {
 		ResponseError(c, err)
+		return
 	}
 
-	json, err := h.agbip.ToByteList(*album)
+	json, err := h.agbip.ToByteList(album)
 	if err != nil {
 		ResponseError(c, err)
+		return
 	}
 
 	c.Writer.Header().Set("Content-Type", "application/json")
@@ -69,5 +81,22 @@ func (h *albumController) GetWithId(c *gin.Context) {
 	_, err = c.Writer.Write(json.JsonByteList)
 	if err != nil {
 		ResponseError(c, err)
+		return
 	}
+}
+
+func (h *albumController) Post(c *gin.Context) {
+	cRes, err := h.acu.Create(c)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	pRes, err := h.acp.Response(cRes)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	c.JSON(200, pRes.Res)
 }
