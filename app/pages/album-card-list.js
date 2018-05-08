@@ -1,10 +1,18 @@
 
+import fetch from 'isomorphic-unfetch'
 import React from 'react'
 import AlbumCard from './album-card'
 
 export default class AlbumCardList extends React.Component {
   constructor(props) {
     super(props);
+    let data = fetch('http://localhost/api/album')
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+      });
     this.state = { cardData: props.cardData };
   }
   add(album) {
