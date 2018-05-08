@@ -41,5 +41,5 @@ func (c *songMysql) GetAll() ([]*models.Song, error) {
 func (m *songMysql) Create(song *models.Song) (uint, error) {
 	err := m.db.Create(&song).Error
 
-	return 0, err
+	return song.ID, err
 }
