@@ -26,7 +26,7 @@ func NewAlbumAllPresenterResult(json []byte) *AlbumAllPresenterResult {
 	}
 }
 
-func (albumu *albumAllPresenter) ToByteList(acur *usecases.AlbumAllUsecaseResult) (*AlbumAllPresenterResult, error) {
-	json, _ := json.Marshal(acur.Albums)
+func (use *albumAllPresenter) ToByteList(useResult *usecases.AlbumAllUsecaseResult) (*AlbumAllPresenterResult, error) {
+	json, _ := json.Marshal(useResult.Albums)
 	return NewAlbumAllPresenterResult(json), nil
 }

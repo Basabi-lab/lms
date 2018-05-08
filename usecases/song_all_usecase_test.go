@@ -21,11 +21,11 @@ func newSongAllMysqlMock(db *gorm.DB) repositories.SongRepository {
 	}
 }
 
-func (amm *songAllMysqlMock) GetByID(id uint) (*models.Song, error) {
+func (mock *songAllMysqlMock) GetByID(id uint) (*models.Song, error) {
 	return nil, nil
 }
 
-func (amm *songAllMysqlMock) GetAll() ([]*models.Song, error) {
+func (mock *songAllMysqlMock) GetAll() ([]*models.Song, error) {
 	song := models.Song{
 		Title: "Song title",
 		Genre: "Song Genre",
@@ -35,13 +35,13 @@ func (amm *songAllMysqlMock) GetAll() ([]*models.Song, error) {
 	return []*models.Song{&song}, nil
 }
 
-func (amm *songAllMysqlMock) Create(cd *models.Song) (uint, error) {
+func (mock *songAllMysqlMock) Create(cd *models.Song) (uint, error) {
 	return 0, nil
 }
 
 func TestSongAllUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	aau := NewSongAllUsecase(newSongAllMysqlMock(db))
+	use := NewSongAllUsecase(newSongAllMysqlMock(db))
 
 	song := models.Song{
 		Title: "Song title",
@@ -55,7 +55,7 @@ func TestSongAllUsecase(t *testing.T) {
 		Songs: songs,
 	}
 
-	songsResult, err := aau.All(&gin.Context{})
+	songsResult, err := use.All(&gin.Context{})
 	assert.NoError(t, err)
 
 	assert.Equal(t, expect, songsResult)

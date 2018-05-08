@@ -10,7 +10,7 @@ import (
 )
 
 func TestAlbumAllToJson(t *testing.T) {
-	aap := NewAlbumAllPresenter()
+	pre := NewAlbumAllPresenter()
 	album1 := models.Album{
 		Title: "Album title",
 	}
@@ -23,6 +23,6 @@ func TestAlbumAllToJson(t *testing.T) {
 		Albums: albums,
 	}
 
-	_, err := aap.ToByteList(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
 }

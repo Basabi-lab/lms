@@ -16,12 +16,12 @@ type AlbumAllUsecaseExt interface {
 }
 
 type albumAllUsecase struct {
-	ar repositories.AlbumRepository
+	repo repositories.AlbumRepository
 }
 
-func NewAlbumAllUsecase(ar repositories.AlbumRepository) AlbumAllUsecaseExt {
+func NewAlbumAllUsecase(repo repositories.AlbumRepository) AlbumAllUsecaseExt {
 	return &albumAllUsecase{
-		ar: ar,
+		repo: repo,
 	}
 }
 
@@ -31,8 +31,8 @@ func NewAlbumAllUsecaseResult(albums []*models.Album) *AlbumAllUsecaseResult {
 	}
 }
 
-func (albumu *albumAllUsecase) All(c *gin.Context) (*AlbumAllUsecaseResult, error) {
-	albums, err := albumu.ar.GetAll()
+func (use *albumAllUsecase) All(c *gin.Context) (*AlbumAllUsecaseResult, error) {
+	albums, err := use.repo.GetAll()
 
 	return NewAlbumAllUsecaseResult(albums), err
 }

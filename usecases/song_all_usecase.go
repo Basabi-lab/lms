@@ -16,12 +16,12 @@ type SongAllUsecaseExt interface {
 }
 
 type songAllUsecase struct {
-	ar repositories.SongRepository
+	repo repositories.SongRepository
 }
 
-func NewSongAllUsecase(ar repositories.SongRepository) SongAllUsecaseExt {
+func NewSongAllUsecase(repo repositories.SongRepository) SongAllUsecaseExt {
 	return &songAllUsecase{
-		ar: ar,
+		repo: repo,
 	}
 }
 
@@ -32,7 +32,7 @@ func NewSongAllUsecaseResult(songs []*models.Song) *SongAllUsecaseResult {
 }
 
 func (songu *songAllUsecase) All(c *gin.Context) (*SongAllUsecaseResult, error) {
-	songs, err := songu.ar.GetAll()
+	songs, err := songu.repo.GetAll()
 
 	return NewSongAllUsecaseResult(songs), err
 }

@@ -11,7 +11,7 @@ import (
 )
 
 func TestSongAllToJson(t *testing.T) {
-	aap := NewSongAllPresenter()
+	pre := NewSongAllPresenter()
 	song1 := test.TestSongData()
 	song2 := test.TestSongData()
 
@@ -21,6 +21,6 @@ func TestSongAllToJson(t *testing.T) {
 		Songs: songs,
 	}
 
-	_, err := aap.ToByteList(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
 }
