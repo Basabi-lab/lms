@@ -7,6 +7,4 @@ type Album struct {
 	Songs  []*Song `json:songs`
 	Artist *Artist `json:artist`
 	Title  string  `json:title`
-	Genre  string  `json:genre`
-	Year   uint    `json:year`
 }

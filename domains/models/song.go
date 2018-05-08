@@ -9,7 +9,9 @@ type Song struct {
 	Artist   *Artist `gorm:"foreignkey:ArtistID";json:artist`
 	ArtistID uint    `json:artist_id`
 	Title    string  `json:title`
+	Genre    string  `json:genre`
+	Year     int     `json:year`
 	Track    int     `json:track`
 	AlbumNum int     `json:album_num`
-	dir      string  `json:dir`
+	Dir      string  `json:dir`
 }
