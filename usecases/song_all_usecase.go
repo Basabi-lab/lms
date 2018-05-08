@@ -7,32 +7,32 @@ import (
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
-type AllSongUsecaseResult struct {
+type SongAllUsecaseResult struct {
 	Songs []*models.Song
 }
 
-type AllSongUsecaseExt interface {
-	All(c *gin.Context) (*AllSongUsecaseResult, error)
+type SongAllUsecaseExt interface {
+	All(c *gin.Context) (*SongAllUsecaseResult, error)
 }
 
-type allSongUsecase struct {
+type songAllUsecase struct {
 	ar repositories.SongRepository
 }
 
-func NewAllSongUsecase(ar repositories.SongRepository) AllSongUsecaseExt {
-	return &allSongUsecase{
+func NewSongAllUsecase(ar repositories.SongRepository) SongAllUsecaseExt {
+	return &songAllUsecase{
 		ar: ar,
 	}
 }
 
-func NewAllSongUsecaseResult(songs []*models.Song) *AllSongUsecaseResult {
-	return &AllSongUsecaseResult{
+func NewSongAllUsecaseResult(songs []*models.Song) *SongAllUsecaseResult {
+	return &SongAllUsecaseResult{
 		Songs: songs,
 	}
 }
 
-func (songu *allSongUsecase) All(c *gin.Context) (*AllSongUsecaseResult, error) {
+func (songu *songAllUsecase) All(c *gin.Context) (*SongAllUsecaseResult, error) {
 	songs, err := songu.ar.GetAll()
 
-	return NewAllSongUsecaseResult(songs), err
+	return NewSongAllUsecaseResult(songs), err
 }

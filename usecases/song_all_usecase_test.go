@@ -11,21 +11,21 @@ import (
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
-type allSongMysqlMock struct {
+type songAllMysqlMock struct {
 	db *gorm.DB
 }
 
-func newAllSongMysqlMock(db *gorm.DB) repositories.SongRepository {
-	return &allSongMysqlMock{
+func newSongAllMysqlMock(db *gorm.DB) repositories.SongRepository {
+	return &songAllMysqlMock{
 		db: db,
 	}
 }
 
-func (amm *allSongMysqlMock) GetByID(id uint) (*models.Song, error) {
+func (amm *songAllMysqlMock) GetByID(id uint) (*models.Song, error) {
 	return nil, nil
 }
 
-func (amm *allSongMysqlMock) GetAll() ([]*models.Song, error) {
+func (amm *songAllMysqlMock) GetAll() ([]*models.Song, error) {
 	song := models.Song{
 		Title: "Song title",
 		Genre: "Song Genre",
@@ -35,13 +35,13 @@ func (amm *allSongMysqlMock) GetAll() ([]*models.Song, error) {
 	return []*models.Song{&song}, nil
 }
 
-func (amm *allSongMysqlMock) Create(cd *models.Song) (uint, error) {
+func (amm *songAllMysqlMock) Create(cd *models.Song) (uint, error) {
 	return 0, nil
 }
 
-func TestAllSongUsecase(t *testing.T) {
+func TestSongAllUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	aau := NewAllSongUsecase(newAllSongMysqlMock(db))
+	aau := NewSongAllUsecase(newSongAllMysqlMock(db))
 
 	song := models.Song{
 		Title: "Song title",
@@ -51,7 +51,7 @@ func TestAllSongUsecase(t *testing.T) {
 
 	songs := []*models.Song{}
 	songs = append(songs, &song)
-	expect := &AllSongUsecaseResult{
+	expect := &SongAllUsecaseResult{
 		Songs: songs,
 	}
 

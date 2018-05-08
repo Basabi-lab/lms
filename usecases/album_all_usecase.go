@@ -7,32 +7,32 @@ import (
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
-type AllAlbumUsecaseResult struct {
+type AlbumAllUsecaseResult struct {
 	Albums []*models.Album
 }
 
-type AllAlbumUsecaseExt interface {
-	All(c *gin.Context) (*AllAlbumUsecaseResult, error)
+type AlbumAllUsecaseExt interface {
+	All(c *gin.Context) (*AlbumAllUsecaseResult, error)
 }
 
-type allAlbumUsecase struct {
+type albumAllUsecase struct {
 	ar repositories.AlbumRepository
 }
 
-func NewAllAlbumUsecase(ar repositories.AlbumRepository) AllAlbumUsecaseExt {
-	return &allAlbumUsecase{
+func NewAlbumAllUsecase(ar repositories.AlbumRepository) AlbumAllUsecaseExt {
+	return &albumAllUsecase{
 		ar: ar,
 	}
 }
 
-func NewAllAlbumUsecaseResult(albums []*models.Album) *AllAlbumUsecaseResult {
-	return &AllAlbumUsecaseResult{
+func NewAlbumAllUsecaseResult(albums []*models.Album) *AlbumAllUsecaseResult {
+	return &AlbumAllUsecaseResult{
 		Albums: albums,
 	}
 }
 
-func (albumu *allAlbumUsecase) All(c *gin.Context) (*AllAlbumUsecaseResult, error) {
+func (albumu *albumAllUsecase) All(c *gin.Context) (*AlbumAllUsecaseResult, error) {
 	albums, err := albumu.ar.GetAll()
 
-	return NewAllAlbumUsecaseResult(albums), err
+	return NewAlbumAllUsecaseResult(albums), err
 }
