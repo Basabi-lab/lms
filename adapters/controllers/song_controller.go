@@ -14,8 +14,8 @@ type SongControllerExt interface {
 }
 
 type songController struct {
-	sau   usecases.AllSongUsecaseExt
-	sap   presenters.AllSongPresenterExt
+	sau   usecases.SongAllUsecaseExt
+	sap   presenters.SongAllPresenterExt
 	sgbiu usecases.SongGetByIDUsecaseExt
 	sgbip presenters.SongGetByIDPresenterExt
 	scu   usecases.SongCreateUsecaseExt
@@ -23,8 +23,8 @@ type songController struct {
 }
 
 func NewSongController(
-	sau usecases.AllSongUsecaseExt,
-	sap presenters.AllSongPresenterExt,
+	sau usecases.SongAllUsecaseExt,
+	sap presenters.SongAllPresenterExt,
 	sgbiu usecases.SongGetByIDUsecaseExt,
 	sgbip presenters.SongGetByIDPresenterExt,
 	scu usecases.SongCreateUsecaseExt,

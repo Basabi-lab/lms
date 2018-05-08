@@ -23,8 +23,8 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 	{
 		ar := dbs.NewAlbumMysql(db)
 
-		aac := usecases.NewAllAlbumUsecase(ar)
-		aap := presenters.NewAllAlbumPresenter()
+		aac := usecases.NewAlbumAllUsecase(ar)
+		aap := presenters.NewAlbumAllPresenter()
 		agbiu := usecases.NewAlbumGetByIDUsecase(ar)
 		agbip := presenters.NewAlbumGetByIDPresenter()
 		acc := usecases.NewAlbumCreateUsecase(ar)
@@ -45,8 +45,8 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 
 		sr := dbs.NewSongMysql(db)
 
-		sac := usecases.NewAllSongUsecase(sr)
-		sap := presenters.NewAllSongPresenter()
+		sac := usecases.NewSongAllUsecase(sr)
+		sap := presenters.NewSongAllPresenter()
 		sgbiu := usecases.NewSongGetByIDUsecase(sr)
 		sgbip := presenters.NewSongGetByIDPresenter()
 		scc := usecases.NewSongCreateUsecase(sr)

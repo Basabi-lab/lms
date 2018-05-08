@@ -14,8 +14,8 @@ type AlbumControllerExt interface {
 }
 
 type albumController struct {
-	aau   usecases.AllAlbumUsecaseExt
-	aap   presenters.AllAlbumPresenterExt
+	aau   usecases.AlbumAllUsecaseExt
+	aap   presenters.AlbumAllPresenterExt
 	agbiu usecases.AlbumGetByIDUsecaseExt
 	agbip presenters.AlbumGetByIDPresenterExt
 	acu   usecases.AlbumCreateUsecaseExt
@@ -23,8 +23,8 @@ type albumController struct {
 }
 
 func NewAlbumController(
-	aau usecases.AllAlbumUsecaseExt,
-	aap presenters.AllAlbumPresenterExt,
+	aau usecases.AlbumAllUsecaseExt,
+	aap presenters.AlbumAllPresenterExt,
 	agbiu usecases.AlbumGetByIDUsecaseExt,
 	agbip presenters.AlbumGetByIDPresenterExt,
 	acu usecases.AlbumCreateUsecaseExt,
