@@ -9,8 +9,8 @@ import (
 	"github.com/Basabi-lab/lms/usecases"
 )
 
-func TestAllAlbumToJson(t *testing.T) {
-	aap := NewAllAlbumPresenter()
+func TestAlbumAllToJson(t *testing.T) {
+	pre := NewAlbumAllPresenter()
 	album1 := models.Album{
 		Title: "Album title",
 	}
@@ -19,10 +19,10 @@ func TestAllAlbumToJson(t *testing.T) {
 	}
 	albums := []*models.Album{}
 	albums = append(albums, &album1, &album2)
-	usecaseResult := &usecases.AllAlbumUsecaseResult{
+	usecaseResult := &usecases.AlbumAllUsecaseResult{
 		Albums: albums,
 	}
 
-	_, err := aap.ToByteList(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
 }

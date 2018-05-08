@@ -10,17 +10,17 @@ import (
 	"github.com/Basabi-lab/lms/usecases"
 )
 
-func TestAllSongToJson(t *testing.T) {
-	aap := NewAllSongPresenter()
+func TestSongAllToJson(t *testing.T) {
+	pre := NewSongAllPresenter()
 	song1 := test.TestSongData()
 	song2 := test.TestSongData()
 
 	songs := []*models.Song{}
 	songs = append(songs, song1, song2)
-	usecaseResult := &usecases.AllSongUsecaseResult{
+	usecaseResult := &usecases.SongAllUsecaseResult{
 		Songs: songs,
 	}
 
-	_, err := aap.ToByteList(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
 }
