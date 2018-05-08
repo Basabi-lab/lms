@@ -28,8 +28,6 @@ func (amm *allAlbumMysqlMock) GetByID(id uint) (*models.Album, error) {
 func (amm *allAlbumMysqlMock) GetAll() ([]*models.Album, error) {
 	album := models.Album{
 		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
 	}
 
 	return []*models.Album{&album}, nil
@@ -45,8 +43,6 @@ func TestAllAlbumUsecase(t *testing.T) {
 
 	album := models.Album{
 		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
 	}
 
 	albums := []*models.Album{}

@@ -9,6 +9,7 @@ import (
 
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
+	"github.com/Basabi-lab/lms/test"
 )
 
 type albumAlbumGetByIDMysqlMock struct {
@@ -22,11 +23,7 @@ func newAlbumGetByIDMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 }
 
 func (amm *albumAlbumGetByIDMysqlMock) GetByID(id uint) (*models.Album, error) {
-	album := &models.Album{
-		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
-	}
+	album := test.TestAlbumData()
 
 	return album, nil
 }
@@ -41,13 +38,9 @@ func (amm *albumAlbumGetByIDMysqlMock) Create(cd *models.Album) (uint, error) {
 
 func TestAlbumGetByIDUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	aau := NewAlbumGetByIDUsecase(newAlbumGetByIDMysqlMock(db))
+	agbiu := NewAlbumGetByIDUsecase(newAlbumGetByIDMysqlMock(db))
 
-	album := &models.Album{
-		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
-	}
+	album := test.TestAlbumData()
 
 	expect := &AlbumGetByIDUsecaseResult{
 		Album: album,
@@ -55,7 +48,7 @@ func TestAlbumGetByIDUsecase(t *testing.T) {
 
 	c := &gin.Context{}
 	c.Params = gin.Params{gin.Param{Key: "id", Value: "10"}}
-	albumResult, err := aau.GetByID(c)
+	albumResult, err := agbiu.GetByID(c)
 	assert.NoError(t, err)
 
 	assert.Equal(t, expect, albumResult)
