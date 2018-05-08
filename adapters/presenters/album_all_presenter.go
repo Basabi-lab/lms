@@ -6,27 +6,27 @@ import (
 	"github.com/Basabi-lab/lms/usecases"
 )
 
-type AllAlbumPresenterExt interface {
-	ToByteList(acur *usecases.AllAlbumUsecaseResult) (*AllAlbumPresenterResult, error)
+type AlbumAllPresenterExt interface {
+	ToByteList(acur *usecases.AlbumAllUsecaseResult) (*AlbumAllPresenterResult, error)
 }
 
-type AllAlbumPresenterResult struct {
+type AlbumAllPresenterResult struct {
 	JsonByteList []byte
 }
 
-type allAlbumPresenter struct{}
+type albumAllPresenter struct{}
 
-func NewAllAlbumPresenter() AllAlbumPresenterExt {
-	return &allAlbumPresenter{}
+func NewAlbumAllPresenter() AlbumAllPresenterExt {
+	return &albumAllPresenter{}
 }
 
-func NewAllAlbumPresenterResult(json []byte) *AllAlbumPresenterResult {
-	return &AllAlbumPresenterResult{
+func NewAlbumAllPresenterResult(json []byte) *AlbumAllPresenterResult {
+	return &AlbumAllPresenterResult{
 		JsonByteList: json,
 	}
 }
 
-func (albumu *allAlbumPresenter) ToByteList(acur *usecases.AllAlbumUsecaseResult) (*AllAlbumPresenterResult, error) {
+func (albumu *albumAllPresenter) ToByteList(acur *usecases.AlbumAllUsecaseResult) (*AlbumAllPresenterResult, error) {
 	json, _ := json.Marshal(acur.Albums)
-	return NewAllAlbumPresenterResult(json), nil
+	return NewAlbumAllPresenterResult(json), nil
 }
