@@ -24,14 +24,21 @@ func NewSongMysql(db *gorm.DB) repositories.SongRepository {
 	}
 }
 
-func (m *songMysql) GetByID(id uint64) (*models.Song, error) {
+func (m *songMysql) GetByID(id uint) (*models.Song, error) {
 	song := &models.Song{}
-	err := m.db.Find(&song).Error
+	err := m.db.First(&song, "id = ?", id).Error
 
 	return song, err
 }
 
-func (m *songMysql) Create(song *models.Song) (uint64, error) {
+func (c *songMysql) GetAll() ([]*models.Song, error) {
+	songs := []*models.Song{}
+	err := c.db.Find(&songs).Error
+
+	return songs, err
+}
+
+func (m *songMysql) Create(song *models.Song) (uint, error) {
 	err := m.db.Create(&song).Error
 
 	return 0, err
