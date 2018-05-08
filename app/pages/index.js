@@ -32,6 +32,7 @@ const data = [
 export default () => {
   return (
     <div style={{width:"100vw",height:"100vh"}}>
+      <button>Add</button>
       <SortablePane direction="horizontal" margin={20}>
         <Pane id={0} key={0} width={240} height="100%" style={paneStyle}>
           <p>Albums</p>
