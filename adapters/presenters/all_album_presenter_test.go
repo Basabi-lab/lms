@@ -13,13 +13,9 @@ func TestAllAlbumToJson(t *testing.T) {
 	aap := NewAllAlbumPresenter()
 	album1 := models.Album{
 		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
 	}
 	album2 := models.Album{
 		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
 	}
 	albums := []*models.Album{}
 	albums = append(albums, &album1, &album2)

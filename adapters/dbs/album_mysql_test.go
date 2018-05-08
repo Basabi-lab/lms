@@ -2,23 +2,14 @@ package dbs
 
 import (
 	"testing"
-	"time"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/stretchr/testify/assert"
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
 
 	"github.com/Basabi-lab/lms/domains/models"
+	"github.com/Basabi-lab/lms/test"
 )
-
-func testData() *models.Album {
-	return &models.Album{
-		Model: newGormModel(0, time.Now()),
-		Title: "Album title",
-		Genre: "Album Genre",
-		Year:  2000,
-	}
-}
 
 func TestAlbumGetAll(t *testing.T) {
 	db, mock := connectDB("test_album_get_all")
@@ -26,11 +17,11 @@ func TestAlbumGetAll(t *testing.T) {
 
 	ar := NewAlbumMysql(db)
 
-	album := testData()
+	album := test.TestAlbumData()
 
-	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title", "genre", "year"}
+	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
-		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.Title, album.Genre, album.Year))
+		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.Title))
 
 	albums, err := ar.GetAll()
 	assert.NoError(t, err)
@@ -46,11 +37,11 @@ func TestAlbumGetByID(t *testing.T) {
 
 	ar := NewAlbumMysql(db)
 
-	expect := testData()
+	expect := test.TestAlbumData()
 
-	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title", "genre", "year"}
+	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
-		AddRow(expect.ID, expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.Title, expect.Genre, expect.Year))
+		AddRow(expect.ID, expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.Title))
 
 	album, err := ar.GetByID(0)
 	assert.NoError(t, err)

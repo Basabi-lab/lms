@@ -19,27 +19,52 @@ import (
 func setupRouter(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
-	ar := dbs.NewAlbumMysql(db)
+	api := r.Group("/api")
+	{
+		ar := dbs.NewAlbumMysql(db)
 
-	aac := usecases.NewAllAlbumUsecase(ar)
-	aap := presenters.NewAllAlbumPresenter()
-	agbiu := usecases.NewAlbumGetByIDUsecase(ar)
-	agbip := presenters.NewAlbumGetByIDPresenter()
-	acc := usecases.NewAlbumCreateUsecase(ar)
-	acp := presenters.NewAlbumCreatePresenter()
+		aac := usecases.NewAllAlbumUsecase(ar)
+		aap := presenters.NewAllAlbumPresenter()
+		agbiu := usecases.NewAlbumGetByIDUsecase(ar)
+		agbip := presenters.NewAlbumGetByIDPresenter()
+		acc := usecases.NewAlbumCreateUsecase(ar)
+		acp := presenters.NewAlbumCreatePresenter()
 
-	ac := controllers.NewAlbumController(
-		aac,
-		aap,
-		agbiu,
-		agbip,
-		acc,
-		acp,
-	)
+		ac := controllers.NewAlbumController(
+			aac,
+			aap,
+			agbiu,
+			agbip,
+			acc,
+			acp,
+		)
 
-	r.GET("/album", ac.GetAll)
-	r.GET("/album/:id", ac.GetById)
-	r.POST("/album", ac.Post)
+		api.GET("/album", ac.GetAll)
+		api.GET("/album/:id", ac.GetById)
+		api.POST("/album", ac.Post)
+
+		sr := dbs.NewSongMysql(db)
+
+		sac := usecases.NewAllSongUsecase(sr)
+		sap := presenters.NewAllSongPresenter()
+		sgbiu := usecases.NewSongGetByIDUsecase(sr)
+		sgbip := presenters.NewSongGetByIDPresenter()
+		scc := usecases.NewSongCreateUsecase(sr)
+		scp := presenters.NewSongCreatePresenter()
+
+		sc := controllers.NewSongController(
+			sac,
+			sap,
+			sgbiu,
+			sgbip,
+			scc,
+			scp,
+		)
+
+		api.GET("/song", sc.GetAll)
+		api.GET("/song/:id", sc.GetById)
+		api.POST("/song", sc.Post)
+	}
 
 	return r
 }
