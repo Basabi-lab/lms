@@ -6,7 +6,7 @@ import AlbumCard from './album-card'
 export default class AlbumCardList extends React.Component {
   constructor(props) {
     super(props);
-    let data = fetch('http://localhost/api/album')
+    let data = fetch('http://localhost:8080/api/album')
       .then((response) => {
         return response.json();
       })
