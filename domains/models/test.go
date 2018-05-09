@@ -26,8 +26,9 @@ func ConnectMockDB(dns string) (*gorm.DB, sqlmock.Sqlmock) {
 
 func TestAlbumData() *Album {
 	return &Album{
-		Model: NewGormModel(0, time.Now()),
-		Title: "Album title",
+		Model:    NewGormModel(0, time.Now()),
+		Title:    "Album title",
+		ArtistID: 1,
 	}
 }
 
