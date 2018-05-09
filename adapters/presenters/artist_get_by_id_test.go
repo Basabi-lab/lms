@@ -5,13 +5,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/Basabi-lab/lms/test"
+	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/usecases"
 )
 
 func TestArtistGetByIDToJson(t *testing.T) {
 	pre := NewArtistGetByIDPresenter()
-	artist := test.TestArtistData()
+	artist := models.TestArtistData()
 	usecaseResult := &usecases.ArtistGetByIDUsecaseResult{
 		Artist: artist,
 	}

@@ -9,7 +9,6 @@ import (
 
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
-	"github.com/Basabi-lab/lms/test"
 )
 
 type artistAllMysqlMock struct {
@@ -27,7 +26,7 @@ func (mock *artistAllMysqlMock) GetByID(id uint) (*models.Artist, error) {
 }
 
 func (mock *artistAllMysqlMock) GetAll() ([]*models.Artist, error) {
-	artist := test.TestArtistData()
+	artist := models.TestArtistData()
 
 	return []*models.Artist{artist}, nil
 }
@@ -40,7 +39,7 @@ func TestArtistAllUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewArtistAllUsecase(newArtistAllMysqlMock(db))
 
-	artist := test.TestArtistData()
+	artist := models.TestArtistData()
 
 	artists := []*models.Artist{}
 	artists = append(artists, artist)

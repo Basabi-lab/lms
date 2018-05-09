@@ -6,14 +6,13 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/Basabi-lab/lms/domains/models"
-	"github.com/Basabi-lab/lms/test"
 	"github.com/Basabi-lab/lms/usecases"
 )
 
 func TestAlbumAllToJson(t *testing.T) {
 	pre := NewAlbumAllPresenter()
-	album1 := test.TestAlbumData()
-	album2 := test.TestAlbumData()
+	album1 := models.TestAlbumData()
+	album2 := models.TestAlbumData()
 
 	albums := []*models.Album{}
 	albums = append(albums, album1, album2)

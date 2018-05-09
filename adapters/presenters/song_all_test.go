@@ -6,14 +6,13 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/Basabi-lab/lms/domains/models"
-	"github.com/Basabi-lab/lms/test"
 	"github.com/Basabi-lab/lms/usecases"
 )
 
 func TestSongAllToJson(t *testing.T) {
 	pre := NewSongAllPresenter()
-	song1 := test.TestSongData()
-	song2 := test.TestSongData()
+	song1 := models.TestSongData()
+	song2 := models.TestSongData()
 
 	songs := []*models.Song{}
 	songs = append(songs, song1, song2)

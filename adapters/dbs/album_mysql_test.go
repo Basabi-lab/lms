@@ -8,16 +8,15 @@ import (
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
 
 	"github.com/Basabi-lab/lms/domains/models"
-	"github.com/Basabi-lab/lms/test"
 )
 
 func TestAlbumGetAll(t *testing.T) {
-	db, mock := test.ConnectMockDB("test_album_get_all")
+	db, mock := models.ConnectMockDB("test_album_get_all")
 	defer db.Close()
 
 	ar := NewAlbumMysql(db)
 
-	album := test.TestAlbumData()
+	album := models.TestAlbumData()
 
 	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
@@ -32,12 +31,12 @@ func TestAlbumGetAll(t *testing.T) {
 }
 
 func TestAlbumGetByID(t *testing.T) {
-	db, mock := test.ConnectMockDB("test_album_get_by_id")
+	db, mock := models.ConnectMockDB("test_album_get_by_id")
 	defer db.Close()
 
 	ar := NewAlbumMysql(db)
 
-	expect := test.TestAlbumData()
+	expect := models.TestAlbumData()
 
 	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).

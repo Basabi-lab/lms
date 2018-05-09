@@ -9,7 +9,6 @@ import (
 
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
-	"github.com/Basabi-lab/lms/test"
 )
 
 type songSongGetByIDMysqlMock struct {
@@ -23,7 +22,7 @@ func newSongGetByIDMysqlMock(db *gorm.DB) repositories.SongRepository {
 }
 
 func (mock *songSongGetByIDMysqlMock) GetByID(id uint) (*models.Song, error) {
-	song := test.TestSongData()
+	song := models.TestSongData()
 
 	return song, nil
 }
@@ -40,7 +39,7 @@ func TestSongGetByIDUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewSongGetByIDUsecase(newSongGetByIDMysqlMock(db))
 
-	song := test.TestSongData()
+	song := models.TestSongData()
 
 	expect := &SongGetByIDUsecaseResult{
 		Song: song,
