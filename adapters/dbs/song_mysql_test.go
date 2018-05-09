@@ -12,7 +12,7 @@ import (
 )
 
 func TestSongGetAll(t *testing.T) {
-	db, mock := connectDB("test_song_get_all")
+	db, mock := test.ConnectMockDB("test_song_get_all")
 	defer db.Close()
 
 	ar := NewSongMysql(db)
@@ -32,7 +32,7 @@ func TestSongGetAll(t *testing.T) {
 }
 
 func TestSongGetByID(t *testing.T) {
-	db, mock := connectDB("test_song_get_by_id")
+	db, mock := test.ConnectMockDB("test_song_get_by_id")
 	defer db.Close()
 
 	ar := NewSongMysql(db)
