@@ -48,6 +48,6 @@ func TestArtistCreateUsecase(t *testing.T) {
 	result, err := use.Create(c)
 	assert.NoError(t, err)
 
-	expect := TestArtistCreateResult()
+	expect := TestArtistCreateUsecaseResult()
 	assert.Equal(t, expect, result)
 }

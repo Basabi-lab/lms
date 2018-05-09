@@ -39,7 +39,7 @@ func TestSongAllUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewSongAllUsecase(newSongAllMysqlMock(db))
 
-	expect := TestSongAllResult()
+	expect := TestSongAllUsecaseResult()
 
 	songsResult, err := use.All(&gin.Context{})
 	assert.NoError(t, err)

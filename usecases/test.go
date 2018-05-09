@@ -4,51 +4,51 @@ import (
 	"github.com/Basabi-lab/lms/domains/models"
 )
 
-func TestAlbumAllResult() *AlbumAllUsecaseResult {
+func TestAlbumAllUsecaseResult() *AlbumAllUsecaseResult {
 	album := models.TestAlbumData()
 	albums := []*models.Album{album, album}
 	return NewAlbumAllUsecaseResult(albums)
 }
 
-func TestAlbumGetByIDResult() *AlbumGetByIDUsecaseResult {
+func TestAlbumGetByIDUsecaseResult() *AlbumGetByIDUsecaseResult {
 	album := models.TestAlbumData()
 	return NewAlbumGetByIDUsecaseResult(album)
 }
 
-func TestAlbumCreateResult() *AlbumCreateUsecaseResult {
+func TestAlbumCreateUsecaseResult() *AlbumCreateUsecaseResult {
 	id := uint(0)
 	return NewAlbumCreateUsecaseResult(id)
 }
 
-func TestSongAllResult() *SongAllUsecaseResult {
+func TestSongAllUsecaseResult() *SongAllUsecaseResult {
 	song := models.TestSongData()
 	songs := []*models.Song{song, song}
 	return NewSongAllUsecaseResult(songs)
 }
 
-func TestSongGetByIDResult() *SongGetByIDUsecaseResult {
+func TestSongGetByIDUsecaseResult() *SongGetByIDUsecaseResult {
 	song := models.TestSongData()
 	return NewSongGetByIDUsecaseResult(song)
 }
 
-func TestSongCreateResult() *SongCreateUsecaseResult {
+func TestSongCreateUsecaseResult() *SongCreateUsecaseResult {
 	id := uint(0)
 	return NewSongCreateUsecaseResult(id)
 }
 
-func TestArtistAllResult() *ArtistAllUsecaseResult {
+func TestArtistAllUsecaseResult() *ArtistAllUsecaseResult {
 	artist := models.TestArtistData()
 	artists := []*models.Artist{artist, artist}
 
 	return NewArtistAllUsecaseResult(artists)
 }
 
-func TestArtistGetByIDResult() *ArtistGetByIDUsecaseResult {
+func TestArtistGetByIDUsecaseResult() *ArtistGetByIDUsecaseResult {
 	artist := models.TestArtistData()
 	return NewArtistGetByIDUsecaseResult(artist)
 }
 
-func TestArtistCreateResult() *ArtistCreateUsecaseResult {
+func TestArtistCreateUsecaseResult() *ArtistCreateUsecaseResult {
 	id := uint(0)
 	return NewArtistCreateUsecaseResult(id)
 }
