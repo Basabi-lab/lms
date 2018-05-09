@@ -10,7 +10,7 @@ import (
 )
 
 func TestSongCreateResponse(t *testing.T) {
-	aap := NewSongCreatePresenter()
+	pre := NewSongCreatePresenter()
 	usecaseResult := &usecases.SongCreateUsecaseResult{
 		ID: uint(0),
 	}
@@ -19,7 +19,7 @@ func TestSongCreateResponse(t *testing.T) {
 		Res: &gin.H{"message": "success", "id": uint(0)},
 	}
 
-	ret, err := aap.Response(usecaseResult)
+	ret, err := pre.Response(usecaseResult)
 	assert.NoError(t, err)
 	assert.Equal(t, expect, ret)
 }

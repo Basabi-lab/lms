@@ -7,7 +7,7 @@ import (
 )
 
 type ArtistCreatePresenterExt interface {
-	Response(acur *usecases.ArtistCreateUsecaseResult) (*ArtistCreatePresenterResult, error)
+	Response(useResult *usecases.ArtistCreateUsecaseResult) (*ArtistCreatePresenterResult, error)
 }
 
 type ArtistCreatePresenterResult struct {
@@ -26,8 +26,8 @@ func NewArtistCreatePresenterResult(res *gin.H) *ArtistCreatePresenterResult {
 	}
 }
 
-func (artistu *artistCreatePresenter) Response(acur *usecases.ArtistCreateUsecaseResult) (*ArtistCreatePresenterResult, error) {
-	res := &gin.H{"message": "success", "id": acur.ID}
+func (use *artistCreatePresenter) Response(useResult *usecases.ArtistCreateUsecaseResult) (*ArtistCreatePresenterResult, error) {
+	res := &gin.H{"message": "success", "id": useResult.ID}
 
 	return NewArtistCreatePresenterResult(res), nil
 }

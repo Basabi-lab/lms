@@ -10,7 +10,7 @@ import (
 )
 
 func TestAlbumCreateResponse(t *testing.T) {
-	aap := NewAlbumCreatePresenter()
+	pre := NewAlbumCreatePresenter()
 	usecaseResult := &usecases.AlbumCreateUsecaseResult{
 		ID: uint(0),
 	}
@@ -19,7 +19,7 @@ func TestAlbumCreateResponse(t *testing.T) {
 		Res: &gin.H{"message": "success", "id": uint(0)},
 	}
 
-	ret, err := aap.Response(usecaseResult)
+	ret, err := pre.Response(usecaseResult)
 	assert.NoError(t, err)
 	assert.Equal(t, expect, ret)
 }

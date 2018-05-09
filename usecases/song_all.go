@@ -31,8 +31,8 @@ func NewSongAllUsecaseResult(songs []*models.Song) *SongAllUsecaseResult {
 	}
 }
 
-func (songu *songAllUsecase) All(c *gin.Context) (*SongAllUsecaseResult, error) {
-	songs, err := songu.repo.GetAll()
+func (use *songAllUsecase) All(c *gin.Context) (*SongAllUsecaseResult, error) {
+	songs, err := use.repo.GetAll()
 
 	return NewSongAllUsecaseResult(songs), err
 }

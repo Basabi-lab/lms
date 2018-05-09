@@ -18,12 +18,12 @@ type AlbumGetByIDUsecaseExt interface {
 }
 
 type albumGetByIDUsecase struct {
-	ar repositories.AlbumRepository
+	repo repositories.AlbumRepository
 }
 
-func NewAlbumGetByIDUsecase(ar repositories.AlbumRepository) AlbumGetByIDUsecaseExt {
+func NewAlbumGetByIDUsecase(repo repositories.AlbumRepository) AlbumGetByIDUsecaseExt {
 	return &albumGetByIDUsecase{
-		ar: ar,
+		repo: repo,
 	}
 }
 
@@ -33,9 +33,9 @@ func NewAlbumGetByIDUsecaseResult(album *models.Album) *AlbumGetByIDUsecaseResul
 	}
 }
 
-func (albumu *albumGetByIDUsecase) GetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error) {
+func (use *albumGetByIDUsecase) GetByID(c *gin.Context) (*AlbumGetByIDUsecaseResult, error) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	album, err := albumu.ar.GetByID(uint(id))
+	album, err := use.repo.GetByID(uint(id))
 
 	return NewAlbumGetByIDUsecaseResult(album), err
 }

@@ -26,7 +26,7 @@ func NewSongAllPresenterResult(json []byte) *SongAllPresenterResult {
 	}
 }
 
-func (use *allSongPresenter) ToByteList(useResult *usecases.SongAllUsecaseResult) (*SongAllPresenterResult, error) {
+func (pre *allSongPresenter) ToByteList(useResult *usecases.SongAllUsecaseResult) (*SongAllPresenterResult, error) {
 	json, _ := json.Marshal(useResult.Songs)
 	return NewSongAllPresenterResult(json), nil
 }

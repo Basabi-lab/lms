@@ -38,7 +38,7 @@ func (amm *albumAlbumGetByIDMysqlMock) Create(cd *models.Album) (uint, error) {
 
 func TestAlbumGetByIDUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	agbiu := NewAlbumGetByIDUsecase(newAlbumGetByIDMysqlMock(db))
+	use := NewAlbumGetByIDUsecase(newAlbumGetByIDMysqlMock(db))
 
 	album := test.TestAlbumData()
 
@@ -48,7 +48,7 @@ func TestAlbumGetByIDUsecase(t *testing.T) {
 
 	c := &gin.Context{}
 	c.Params = gin.Params{gin.Param{Key: "id", Value: "10"}}
-	albumResult, err := agbiu.GetByID(c)
+	albumResult, err := use.GetByID(c)
 	assert.NoError(t, err)
 
 	assert.Equal(t, expect, albumResult)

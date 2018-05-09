@@ -9,6 +9,7 @@ import (
 
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
+	"github.com/Basabi-lab/lms/test"
 )
 
 type songAllMysqlMock struct {
@@ -26,13 +27,9 @@ func (mock *songAllMysqlMock) GetByID(id uint) (*models.Song, error) {
 }
 
 func (mock *songAllMysqlMock) GetAll() ([]*models.Song, error) {
-	song := models.Song{
-		Title: "Song title",
-		Genre: "Song Genre",
-		Year:  2000,
-	}
+	song := test.TestSongData()
 
-	return []*models.Song{&song}, nil
+	return []*models.Song{song}, nil
 }
 
 func (mock *songAllMysqlMock) Create(cd *models.Song) (uint, error) {
@@ -43,14 +40,10 @@ func TestSongAllUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewSongAllUsecase(newSongAllMysqlMock(db))
 
-	song := models.Song{
-		Title: "Song title",
-		Genre: "Song Genre",
-		Year:  2000,
-	}
+	song := test.TestSongData()
 
 	songs := []*models.Song{}
-	songs = append(songs, &song)
+	songs = append(songs, song)
 	expect := &SongAllUsecaseResult{
 		Songs: songs,
 	}

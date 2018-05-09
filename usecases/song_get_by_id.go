@@ -18,12 +18,12 @@ type SongGetByIDUsecaseExt interface {
 }
 
 type songGetByIDUsecase struct {
-	sr repositories.SongRepository
+	repo repositories.SongRepository
 }
 
-func NewSongGetByIDUsecase(sr repositories.SongRepository) SongGetByIDUsecaseExt {
+func NewSongGetByIDUsecase(repo repositories.SongRepository) SongGetByIDUsecaseExt {
 	return &songGetByIDUsecase{
-		sr: sr,
+		repo: repo,
 	}
 }
 
@@ -35,7 +35,7 @@ func NewSongGetByIDUsecaseResult(song *models.Song) *SongGetByIDUsecaseResult {
 
 func (songu *songGetByIDUsecase) GetByID(c *gin.Context) (*SongGetByIDUsecaseResult, error) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	song, err := songu.sr.GetByID(uint(id))
+	song, err := songu.repo.GetByID(uint(id))
 
 	return NewSongGetByIDUsecaseResult(song), err
 }

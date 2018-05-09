@@ -10,12 +10,12 @@ import (
 )
 
 func TestArtistGetByIDToJson(t *testing.T) {
-	agbip := NewArtistGetByIDPresenter()
+	pre := NewArtistGetByIDPresenter()
 	artist := test.TestArtistData()
 	usecaseResult := &usecases.ArtistGetByIDUsecaseResult{
 		Artist: artist,
 	}
 
-	_, err := agbip.ToByteList(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
 }

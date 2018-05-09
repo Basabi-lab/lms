@@ -25,21 +25,21 @@ func newSongCreateMysqlMock(db *gorm.DB) repositories.SongRepository {
 	}
 }
 
-func (amm *songCreateMysqlMock) GetByID(id uint) (*models.Song, error) {
+func (mock *songCreateMysqlMock) GetByID(id uint) (*models.Song, error) {
 	return nil, nil
 }
 
-func (amm *songCreateMysqlMock) GetAll() ([]*models.Song, error) {
+func (mock *songCreateMysqlMock) GetAll() ([]*models.Song, error) {
 	return nil, nil
 }
 
-func (amm *songCreateMysqlMock) Create(cd *models.Song) (uint, error) {
+func (mock *songCreateMysqlMock) Create(cd *models.Song) (uint, error) {
 	return 0, nil
 }
 
 func TestSongCreateUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	acu := NewSongCreateUsecase(newSongCreateMysqlMock(db))
+	use := NewSongCreateUsecase(newSongCreateMysqlMock(db))
 
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	json := `
@@ -57,6 +57,6 @@ func TestSongCreateUsecase(t *testing.T) {
 	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString(json))
 	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
 
-	_, err := acu.Create(c)
+	_, err := use.Create(c)
 	assert.NoError(t, err)
 }

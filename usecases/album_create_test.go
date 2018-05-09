@@ -25,26 +25,26 @@ func newAlbumCreateMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 	}
 }
 
-func (amm *albumCreateMysqlMock) GetByID(id uint) (*models.Album, error) {
+func (mock *albumCreateMysqlMock) GetByID(id uint) (*models.Album, error) {
 	return nil, nil
 }
 
-func (amm *albumCreateMysqlMock) GetAll() ([]*models.Album, error) {
+func (mock *albumCreateMysqlMock) GetAll() ([]*models.Album, error) {
 	return nil, nil
 }
 
-func (amm *albumCreateMysqlMock) Create(cd *models.Album) (uint, error) {
+func (mock *albumCreateMysqlMock) Create(cd *models.Album) (uint, error) {
 	return 0, nil
 }
 
 func TestAlbumCreateUsecase(t *testing.T) {
 	db := &gorm.DB{}
-	acu := NewAlbumCreateUsecase(newAlbumCreateMysqlMock(db))
+	use := NewAlbumCreateUsecase(newAlbumCreateMysqlMock(db))
 
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString("{\"title\":\"bar\", \"genre\":\"foo\", \"year\":2000}"))
 	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
 
-	_, err := acu.Create(c)
+	_, err := use.Create(c)
 	assert.NoError(t, err)
 }

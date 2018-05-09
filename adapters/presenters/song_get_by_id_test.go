@@ -10,7 +10,7 @@ import (
 )
 
 func TestSongGetByIDToJson(t *testing.T) {
-	sgbip := NewSongGetByIDPresenter()
+	pre := NewSongGetByIDPresenter()
 	song := &models.Song{
 		Title: "Song title",
 	}
@@ -18,6 +18,6 @@ func TestSongGetByIDToJson(t *testing.T) {
 		Song: song,
 	}
 
-	_, err := sgbip.ToByteList(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
 }

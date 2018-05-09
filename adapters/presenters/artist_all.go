@@ -7,7 +7,7 @@ import (
 )
 
 type ArtistAllPresenterExt interface {
-	ToByteList(usecaseResult *usecases.ArtistAllUsecaseResult) (*ArtistAllPresenterResult, error)
+	ToByteList(useResult *usecases.ArtistAllUsecaseResult) (*ArtistAllPresenterResult, error)
 }
 
 type ArtistAllPresenterResult struct {
@@ -26,7 +26,7 @@ func NewArtistAllPresenterResult(json []byte) *ArtistAllPresenterResult {
 	}
 }
 
-func (use *artistAllPresenter) ToByteList(useResult *usecases.ArtistAllUsecaseResult) (*ArtistAllPresenterResult, error) {
+func (pre *artistAllPresenter) ToByteList(useResult *usecases.ArtistAllUsecaseResult) (*ArtistAllPresenterResult, error) {
 	json, _ := json.Marshal(useResult.Artists)
 	return NewArtistAllPresenterResult(json), nil
 }
