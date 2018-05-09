@@ -39,11 +39,7 @@ func TestArtistGetByIDUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewArtistGetByIDUsecase(newArtistGetByIDMysqlMock(db))
 
-	artist := models.TestArtistData()
-
-	expect := &ArtistGetByIDUsecaseResult{
-		Artist: artist,
-	}
+	expect := TestArtistGetByIDResult()
 
 	c := &gin.Context{}
 	c.Params = gin.Params{gin.Param{Key: "id", Value: "10"}}

@@ -45,6 +45,9 @@ func TestArtistCreateUsecase(t *testing.T) {
 	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString("{\"album_id\": 1, \"name\":\"artist name\", \"biography\":\"artist biography\"}"))
 	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
 
-	_, err := use.Create(c)
+	result, err := use.Create(c)
 	assert.NoError(t, err)
+
+	expect := TestArtistCreateResult()
+	assert.Equal(t, expect, result)
 }

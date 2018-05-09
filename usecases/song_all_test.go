@@ -28,7 +28,7 @@ func (mock *songAllMysqlMock) GetByID(id uint) (*models.Song, error) {
 func (mock *songAllMysqlMock) GetAll() ([]*models.Song, error) {
 	song := models.TestSongData()
 
-	return []*models.Song{song}, nil
+	return []*models.Song{song, song}, nil
 }
 
 func (mock *songAllMysqlMock) Create(cd *models.Song) (uint, error) {
@@ -39,13 +39,7 @@ func TestSongAllUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewSongAllUsecase(newSongAllMysqlMock(db))
 
-	song := models.TestSongData()
-
-	songs := []*models.Song{}
-	songs = append(songs, song)
-	expect := &SongAllUsecaseResult{
-		Songs: songs,
-	}
+	expect := TestSongAllResult()
 
 	songsResult, err := use.All(&gin.Context{})
 	assert.NoError(t, err)

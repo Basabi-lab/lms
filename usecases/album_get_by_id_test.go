@@ -21,17 +21,17 @@ func newAlbumGetByIDMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 	}
 }
 
-func (amm *albumAlbumGetByIDMysqlMock) GetByID(id uint) (*models.Album, error) {
+func (mock *albumAlbumGetByIDMysqlMock) GetByID(id uint) (*models.Album, error) {
 	album := models.TestAlbumData()
 
 	return album, nil
 }
 
-func (amm *albumAlbumGetByIDMysqlMock) GetAll() ([]*models.Album, error) {
+func (mock *albumAlbumGetByIDMysqlMock) GetAll() ([]*models.Album, error) {
 	return nil, nil
 }
 
-func (amm *albumAlbumGetByIDMysqlMock) Create(cd *models.Album) (uint, error) {
+func (mock *albumAlbumGetByIDMysqlMock) Create(cd *models.Album) (uint, error) {
 	return 0, nil
 }
 
@@ -39,11 +39,7 @@ func TestAlbumGetByIDUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewAlbumGetByIDUsecase(newAlbumGetByIDMysqlMock(db))
 
-	album := models.TestAlbumData()
-
-	expect := &AlbumGetByIDUsecaseResult{
-		Album: album,
-	}
+	expect := TestAlbumGetByIDResult()
 
 	c := &gin.Context{}
 	c.Params = gin.Params{gin.Param{Key: "id", Value: "10"}}

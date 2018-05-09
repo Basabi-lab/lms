@@ -57,6 +57,9 @@ func TestSongCreateUsecase(t *testing.T) {
 	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString(json))
 	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
 
-	_, err := use.Create(c)
+	result, err := use.Create(c)
 	assert.NoError(t, err)
+
+	expect := TestSongCreateResult()
+	assert.Equal(t, expect, result)
 }
