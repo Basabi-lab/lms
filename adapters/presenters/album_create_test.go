@@ -3,7 +3,6 @@ package presenters
 import (
 	"testing"
 
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/Basabi-lab/lms/usecases"
@@ -11,13 +10,8 @@ import (
 
 func TestAlbumCreateResponse(t *testing.T) {
 	pre := NewAlbumCreatePresenter()
-	usecaseResult := &usecases.AlbumCreateUsecaseResult{
-		ID: uint(0),
-	}
-
-	expect := &AlbumCreatePresenterResult{
-		Res: &gin.H{"message": "success", "id": uint(0)},
-	}
+	usecaseResult := usecases.TestAlbumCreateUsecaseResult()
+	expect := TestAlbumCreatePresenterResult()
 
 	ret, err := pre.Response(usecaseResult)
 	assert.NoError(t, err)

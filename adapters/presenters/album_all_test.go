@@ -5,20 +5,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/usecases"
 )
 
 func TestAlbumAllToJson(t *testing.T) {
 	pre := NewAlbumAllPresenter()
-	album1 := models.TestAlbumData()
-	album2 := models.TestAlbumData()
-
-	albums := []*models.Album{}
-	albums = append(albums, album1, album2)
-	usecaseResult := &usecases.AlbumAllUsecaseResult{
-		Albums: albums,
-	}
+	usecaseResult := usecases.TestAlbumAllUsecaseResult()
 
 	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
