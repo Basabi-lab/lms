@@ -13,6 +13,8 @@ tags:
     description: Access to Album information
   - name: Song API
     description: Access to Song information
+  - name: Artist API
+    description: Access to Artist information
 schemes:
   - http
 paths:
@@ -325,6 +327,136 @@ paths:
                 type: string
                 format: string
                 example: "/path/to/song"
+        '500':
+          description: not exist album the id
+          schema:
+            type: object
+            properties:
+              Error:
+                type: string
+                format: string
+  /artist:
+    get:
+      tags:
+        - Artist API
+      summary: Get all artist info
+      description: Get all artist information from server side.
+      parameters:
+        - name: sort with from to limit
+          in: body
+          description: get album between param from to
+          required: false
+          schema:
+            type: object
+            properties:
+              sort:
+                type: string
+                format: string
+                example: new
+              from:
+                type: integer
+                format: int64
+                example: 0
+              to:
+                type: integer
+                format: int64
+                example: 10
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  example: 0
+                album_id:
+                  type: integer
+                  format: int64
+                  example: 0
+                name:
+                  type: string
+                  format: string
+                  example: artist name
+                biography:
+                  type: string
+                  format: string
+                  example: artist biography
+    post:
+      tags:
+        - Artist API
+      summary: Post Artist info to the server side.
+      description: a
+      parameters:
+        - name: sort with from to limit
+          in: body
+          description: get Artist between param from to
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: artist name
+              album_id:
+                type: integer
+                format: int64
+                example: 0
+              biography:
+                type: string
+                format: string
+                example: artist biography
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+                example: success
+              id:
+                type: integer
+                format: int64
+                example: 0
+  /artist/{artist_id}:
+    get:
+      tags:
+        - Artist API
+      summary: Get Artist info by artist_id
+      description: todo add
+      parameters:
+        - name: artist_id
+          in: path
+          description: artist id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                example: 0
+              album_id:
+                type: integer
+                format: int64
+                example: 0
+              name:
+                type: string
+                format: string
+                example: artist name
+              biography:
+                type: string
+                format: string
+                example: artist biography
         '500':
           description: not exist album the id
           schema:

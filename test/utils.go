@@ -33,6 +33,14 @@ func TestAlbumData() *models.Album {
 	}
 }
 
+func TestArtistData() *models.Artist {
+	return &models.Artist{
+		Model:     NewGormModel(0, time.Now()),
+		Name:      "Artist name",
+		Biography: "Artist biography",
+	}
+}
+
 func TestSongData() *models.Song {
 	return &models.Song{
 		Model:    NewGormModel(0, time.Now()),
