@@ -18,9 +18,9 @@ func TestAlbumGetAll(t *testing.T) {
 
 	album := models.TestAlbumData()
 
-	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title"}
+	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "artist_id", "title"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
-		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.Title))
+		AddRow(album.ID, album.CreatedAt, album.UpdatedAt, album.DeletedAt, album.ArtistID, album.Title))
 
 	albums, err := ar.GetAll()
 	assert.NoError(t, err)
@@ -38,9 +38,9 @@ func TestAlbumGetByID(t *testing.T) {
 
 	expect := models.TestAlbumData()
 
-	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "title"}
+	var albumCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "artist_id", "title"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(albumCols).
-		AddRow(expect.ID, expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.Title))
+		AddRow(expect.ID, expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.ArtistID, expect.Title))
 
 	album, err := ar.GetByID(0)
 	assert.NoError(t, err)
