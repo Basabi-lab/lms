@@ -64,6 +64,29 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 		api.GET("/song", sc.GetAll)
 		api.GET("/song/:id", sc.GetById)
 		api.POST("/song", sc.Post)
+
+		artistRepo := dbs.NewArtistMysql(db)
+
+		artistAllU := usecases.NewArtistAllUsecase(artistRepo)
+		artistAllP := presenters.NewArtistAllPresenter()
+		artistCreateU := usecases.NewArtistGetByIDUsecase(artistRepo)
+		artistCreateP := presenters.NewArtistGetByIDPresenter()
+		artistGetByIDU := usecases.NewArtistCreateUsecase(artistRepo)
+		artistGetByIDP := presenters.NewArtistCreatePresenter()
+
+		artistCtrl := controllers.NewArtistController(
+			artistAllU,
+			artistAllP,
+			artistCreateU,
+			artistCreateP,
+			artistGetByIDU,
+			artistGetByIDP,
+		)
+
+		api.GET("/song", artistCtrl.GetAll)
+		api.GET("/song/:id", artistCtrl.GetById)
+		api.POST("/song", artistCtrl.Post)
+
 	}
 
 	return r
