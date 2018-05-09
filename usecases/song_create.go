@@ -16,12 +16,12 @@ type SongCreateUsecaseExt interface {
 }
 
 type songCreateUsecase struct {
-	sr repositories.SongRepository
+	repo repositories.SongRepository
 }
 
-func NewSongCreateUsecase(sr repositories.SongRepository) SongCreateUsecaseExt {
+func NewSongCreateUsecase(repo repositories.SongRepository) SongCreateUsecaseExt {
 	return &songCreateUsecase{
-		sr: sr,
+		repo: repo,
 	}
 }
 
@@ -31,13 +31,13 @@ func NewSongCreateUsecaseResult(id uint) *SongCreateUsecaseResult {
 	}
 }
 
-func (songu *songCreateUsecase) Create(c *gin.Context) (*SongCreateUsecaseResult, error) {
+func (use *songCreateUsecase) Create(c *gin.Context) (*SongCreateUsecaseResult, error) {
 	var json models.Song
 	err := c.ShouldBindJSON(&json)
 	if err != nil {
 		return nil, err
 	}
-	id, err := songu.sr.Create(&json)
+	id, err := use.repo.Create(&json)
 
 	return NewSongCreateUsecaseResult(id), err
 }

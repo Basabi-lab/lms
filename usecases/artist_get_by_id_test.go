@@ -9,7 +9,6 @@ import (
 
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
-	"github.com/Basabi-lab/lms/test"
 )
 
 type artistArtistGetByIDMysqlMock struct {
@@ -23,7 +22,7 @@ func newArtistGetByIDMysqlMock(db *gorm.DB) repositories.ArtistRepository {
 }
 
 func (mock *artistArtistGetByIDMysqlMock) GetByID(id uint) (*models.Artist, error) {
-	artist := test.TestArtistData()
+	artist := models.TestArtistData()
 
 	return artist, nil
 }
@@ -40,16 +39,11 @@ func TestArtistGetByIDUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewArtistGetByIDUsecase(newArtistGetByIDMysqlMock(db))
 
-	artist := test.TestArtistData()
-
-	expect := &ArtistGetByIDUsecaseResult{
-		Artist: artist,
-	}
-
 	c := &gin.Context{}
 	c.Params = gin.Params{gin.Param{Key: "id", Value: "10"}}
 	artistResult, err := use.GetByID(c)
 	assert.NoError(t, err)
 
+	expect := TestArtistGetByIDUsecaseResult()
 	assert.Equal(t, expect, artistResult)
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type AlbumGetByIDPresenterExt interface {
-	ToByteList(acur *usecases.AlbumGetByIDUsecaseResult) (*AlbumGetByIDPresenterResult, error)
+	ToByteList(useResult *usecases.AlbumGetByIDUsecaseResult) (*AlbumGetByIDPresenterResult, error)
 }
 
 type AlbumGetByIDPresenterResult struct {
@@ -26,7 +26,7 @@ func NewAlbumGetByIDPresenterResult(json []byte) *AlbumGetByIDPresenterResult {
 	}
 }
 
-func (albumu *albumGetByIDPresenter) ToByteList(agbiu *usecases.AlbumGetByIDUsecaseResult) (*AlbumGetByIDPresenterResult, error) {
-	json, _ := json.Marshal(agbiu.Album)
+func (pre *albumGetByIDPresenter) ToByteList(useResult *usecases.AlbumGetByIDUsecaseResult) (*AlbumGetByIDPresenterResult, error) {
+	json, _ := json.Marshal(useResult.Album)
 	return NewAlbumGetByIDPresenterResult(json), nil
 }

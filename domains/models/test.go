@@ -1,12 +1,10 @@
-package test
+package models
 
 import (
 	"time"
 
 	"github.com/jinzhu/gorm"
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
-
-	"github.com/Basabi-lab/lms/domains/models"
 )
 
 func NewGormModel(id uint, now time.Time) gorm.Model {
@@ -26,23 +24,23 @@ func ConnectMockDB(dns string) (*gorm.DB, sqlmock.Sqlmock) {
 	return db, mock
 }
 
-func TestAlbumData() *models.Album {
-	return &models.Album{
+func TestAlbumData() *Album {
+	return &Album{
 		Model: NewGormModel(0, time.Now()),
 		Title: "Album title",
 	}
 }
 
-func TestArtistData() *models.Artist {
-	return &models.Artist{
+func TestArtistData() *Artist {
+	return &Artist{
 		Model:     NewGormModel(0, time.Now()),
 		Name:      "Artist name",
 		Biography: "Artist biography",
 	}
 }
 
-func TestSongData() *models.Song {
-	return &models.Song{
+func TestSongData() *Song {
+	return &Song{
 		Model:    NewGormModel(0, time.Now()),
 		AlbumID:  1,
 		ArtistID: 1,

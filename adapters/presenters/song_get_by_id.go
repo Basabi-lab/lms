@@ -7,7 +7,7 @@ import (
 )
 
 type SongGetByIDPresenterExt interface {
-	ToByteList(acur *usecases.SongGetByIDUsecaseResult) (*SongGetByIDPresenterResult, error)
+	ToByteList(useResult *usecases.SongGetByIDUsecaseResult) (*SongGetByIDPresenterResult, error)
 }
 
 type SongGetByIDPresenterResult struct {
@@ -26,7 +26,7 @@ func NewSongGetByIDPresenterResult(json []byte) *SongGetByIDPresenterResult {
 	}
 }
 
-func (songu *songGetByIDPresenter) ToByteList(sgbiu *usecases.SongGetByIDUsecaseResult) (*SongGetByIDPresenterResult, error) {
-	json, _ := json.Marshal(sgbiu.Song)
+func (pre *songGetByIDPresenter) ToByteList(useResult *usecases.SongGetByIDUsecaseResult) (*SongGetByIDPresenterResult, error) {
+	json, _ := json.Marshal(useResult.Song)
 	return NewSongGetByIDPresenterResult(json), nil
 }

@@ -16,12 +16,12 @@ type AlbumCreateUsecaseExt interface {
 }
 
 type albumCreateUsecase struct {
-	ar repositories.AlbumRepository
+	repo repositories.AlbumRepository
 }
 
-func NewAlbumCreateUsecase(ar repositories.AlbumRepository) AlbumCreateUsecaseExt {
+func NewAlbumCreateUsecase(repo repositories.AlbumRepository) AlbumCreateUsecaseExt {
 	return &albumCreateUsecase{
-		ar: ar,
+		repo: repo,
 	}
 }
 
@@ -31,13 +31,13 @@ func NewAlbumCreateUsecaseResult(id uint) *AlbumCreateUsecaseResult {
 	}
 }
 
-func (albumu *albumCreateUsecase) Create(c *gin.Context) (*AlbumCreateUsecaseResult, error) {
+func (use *albumCreateUsecase) Create(c *gin.Context) (*AlbumCreateUsecaseResult, error) {
 	var json models.Album
 	err := c.ShouldBindJSON(&json)
 	if err != nil {
 		return nil, err
 	}
-	id, err := albumu.ar.Create(&json)
+	id, err := use.repo.Create(&json)
 
 	return NewAlbumCreateUsecaseResult(id), err
 }
