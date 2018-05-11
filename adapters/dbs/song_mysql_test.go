@@ -18,9 +18,9 @@ func TestSongGetAll(t *testing.T) {
 
 	song := models.TestSongData()
 
-	var songCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "album_id", "artist_id", "title", "genre", "year", "track", "album_num", "dir"}
+	var songCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "album_id", "artist_id", "title", "genre", "year", "track", "disc", "path"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(songCols).
-		AddRow(song.ID, song.CreatedAt, song.UpdatedAt, song.DeletedAt, song.AlbumID, song.ArtistID, song.Title, song.Genre, song.Year, song.Track, song.AlbumNum, song.Dir))
+		AddRow(song.ID, song.CreatedAt, song.UpdatedAt, song.DeletedAt, song.AlbumID, song.ArtistID, song.Title, song.Genre, song.Year, song.Track, song.Disc, song.Path))
 
 	songs, err := ar.GetAll()
 	assert.NoError(t, err)
@@ -38,9 +38,9 @@ func TestSongGetByID(t *testing.T) {
 
 	expect := models.TestSongData()
 
-	var songCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "album_id", "artist_id", "title", "genre", "year", "track", "album_num", "dir"}
+	var songCols []string = []string{"id", "created_at", "updated_at", "deleted_at", "album_id", "artist_id", "title", "genre", "year", "track", "disc", "path"}
 	mock.ExpectQuery("SELECT").WillReturnRows(sqlmock.NewRows(songCols).
-		AddRow(expect.ID, expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.AlbumID, expect.ArtistID, expect.Title, expect.Genre, expect.Year, expect.Track, expect.AlbumNum, expect.Dir))
+		AddRow(expect.ID, expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.AlbumID, expect.ArtistID, expect.Title, expect.Genre, expect.Year, expect.Track, expect.Disc, expect.Path))
 
 	song, err := ar.GetByID(0)
 	assert.NoError(t, err)
