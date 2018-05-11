@@ -7,9 +7,9 @@ import (
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
 )
 
-func NewGormModel(id uint, now time.Time) gorm.Model {
+func NewModel(id uint, now time.Time) Model {
 	date := time.Date(2000, 1, 1, 1, 0, 0, 0, &time.Location{})
-	return gorm.Model{
+	return Model{
 		ID:        id,
 		CreatedAt: date,
 		UpdatedAt: date,
@@ -26,7 +26,7 @@ func ConnectMockDB(dns string) (*gorm.DB, sqlmock.Sqlmock) {
 
 func TestAlbumData() *Album {
 	return &Album{
-		Model:    NewGormModel(0, time.Now()),
+		Model:    NewModel(0, time.Now()),
 		Title:    "Album title",
 		ArtistID: 1,
 	}
@@ -34,7 +34,7 @@ func TestAlbumData() *Album {
 
 func TestArtistData() *Artist {
 	return &Artist{
-		Model:     NewGormModel(0, time.Now()),
+		Model:     NewModel(0, time.Now()),
 		Name:      "Artist name",
 		Biography: "Artist biography",
 	}
@@ -42,14 +42,14 @@ func TestArtistData() *Artist {
 
 func TestSongData() *Song {
 	return &Song{
-		Model:    NewGormModel(0, time.Now()),
+		Model:    NewModel(0, time.Now()),
 		AlbumID:  1,
 		ArtistID: 1,
 		Title:    "Song Title",
 		Track:    1,
 		Genre:    "Song Genre",
 		Year:     2000,
-		AlbumNum: 1,
-		Dir:      "/home/sample/Music/dir",
+		Disc:     1,
+		Path:     "/home/sample/Music/dir",
 	}
 }

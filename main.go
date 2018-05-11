@@ -83,9 +83,9 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 			artistGetByIDP,
 		)
 
-		api.GET("/song", artistCtrl.GetAll)
-		api.GET("/song/:id", artistCtrl.GetById)
-		api.POST("/song", artistCtrl.Post)
+		api.GET("/artist", artistCtrl.GetAll)
+		api.GET("/artist/:id", artistCtrl.GetById)
+		api.POST("/artist", artistCtrl.Post)
 
 	}
 
