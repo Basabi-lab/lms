@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Basabi-lab/lms.svg?style=svg)](https://circleci.com/gh/Basabi-lab/lms)
+
 PORT=8080 CLEARDB_DATABASE_URL="mysql://$(user):$(password)@/$(dbname)" ./lms
 
 # For Docker
