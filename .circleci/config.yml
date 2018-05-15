@@ -14,7 +14,7 @@ jobs:
 
       - run: go get -v -t -d ./...
       - run: go test -v ./...
+      - run: go build
 
       - run: go get github.com/mattn/goveralls
       - run: goveralls -v -service=circle-ci -repotoken $COVERALLS_TOKEN ./lms
-      - run: goveralls -v -service=circle-ci -coverprofile=/go/src/$PROJECT_GO_PACKAGE/coverage.out -repotoken $COVERALLS_TOKEN ./lms
