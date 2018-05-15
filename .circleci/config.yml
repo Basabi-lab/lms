@@ -13,8 +13,8 @@ jobs:
       - run: sudo apt-get install -y libtag1-dev libtagc0-dev
 
       - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run: go test ./... -v -covermode=count -coverprofile=coverage.out
       - run: go build
 
       - run: go get github.com/mattn/goveralls
-      - run: goveralls -v -service=circle-ci -repotoken $COVERALLS_TOKEN ./lms
+      - run: goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
