@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/Basabi-lab/lms.svg?style=svg)](https://circleci.com/gh/Basabi-lab/lms)
+[![Coverage Status](https://coveralls.io/repos/github/Basabi-lab/lms/badge.svg?branch=master)](https://coveralls.io/github/Basabi-lab/lms?branch=master)
 
 PORT=8080 CLEARDB_DATABASE_URL="mysql://$(user):$(password)@/$(dbname)" ./lms
 

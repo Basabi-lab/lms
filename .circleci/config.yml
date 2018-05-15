@@ -9,4 +9,8 @@ jobs:
     steps:
       - checkout
       - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run: go test ./... -v -covermode=count -coverprofile=coverage.out
+      - run: go build
+
+      - run: go get github.com/mattn/goveralls
+      - run: goveralls -coverprofile=coverage.out -service=circle-ci -repotoken $COVERALLS_TOKEN
