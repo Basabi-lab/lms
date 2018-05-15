@@ -9,8 +9,8 @@ jobs:
     steps:
       - checkout
 
-      - run: apt-get update
-      - run: apt-get install -y libtag1-dev
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y libtag1-dev
 
       - run: go get -v -t -d ./...
       - run: go test -v ./...
