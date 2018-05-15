@@ -13,4 +13,4 @@ jobs:
       - run: go build
 
       - run: go get github.com/mattn/goveralls
-      - run: goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+      - run: goveralls -coverprofile=coverage.out -service=circle-ci -repotoken $COVERALLS_TOKEN
