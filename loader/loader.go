@@ -65,6 +65,8 @@ func toSong(info *taglib.Tags) *models.Song {
 }
 
 func (l *loader) Load() error {
+	l.accessor.ClearAll()
+
 	songList, err := l.scanner.Scan()
 	if err != nil {
 		return err

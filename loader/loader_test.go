@@ -38,8 +38,8 @@ type accessorMock struct {
 	Host string
 }
 
-func (a *accessorMock) LastUpdate() (time.Time, error) {
-	return time.Time{}, nil
+func (a *accessorMock) ClearAll() error {
+	return nil
 }
 func (a *accessorMock) GetArtistByName(name string) (*models.Artist, error) {
 	return nil, nil
