@@ -95,6 +95,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/vbatts/go-taglib"
+  packages = ["taglib"]
+  revision = "a4263748a32e83cc1fffa605ee79fac1f48428fb"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "78d5f264b493f125018180c204871ecf58a2dce1"
@@ -112,6 +118,12 @@
   version = "v8.18.2"
 
 [[projects]]
+  branch = "v1"
+  name = "gopkg.in/jarcoal/httpmock.v1"
+  packages = ["."]
+  revision = "eb84b840d3d6889d2458ceed28e3c6f0d109f6c8"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -120,6 +132,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9fd1902754a67dff342edcf3ad1e167dc151aa0d50c0bf479981a1e89e730b4a"
+  inputs-digest = "0ca0dedef1e0c696ab7a8686015304af057e0b7f2bca20fc148658d21fc3a460"
   solver-name = "gps-cdcl"
   solver-version = 1
