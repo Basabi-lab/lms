@@ -11,6 +11,10 @@ jobs:
 
       - run: sudo apt-get update
       - run: sudo apt-get install -y libtag1-dev libtagc0-dev
+      - run:
+          name: setting sample song timestamp
+          command: |
+            sh /go/src/github.com/Basabi-lab/lms/tests/set_timestamp_song.sh
 
       - run: go get -v -t -d ./...
       - run: go test ./... -v -covermode=count -coverprofile=coverage.out
