@@ -8,7 +8,8 @@ import (
 )
 
 func NewModel(id uint, now time.Time) Model {
-	date := time.Date(2000, 1, 1, 1, 0, 0, 0, &time.Location{})
+	loc, _ := time.LoadLocation("UTC")
+	date := time.Date(2000, 1, 1, 1, 0, 0, 0, loc)
 	return Model{
 		ID:        id,
 		CreatedAt: date,
