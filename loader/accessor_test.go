@@ -17,6 +17,30 @@ type testAccessor struct{}
 
 var host string = "http://localhost:8080"
 
+func TestClearAll(t *testing.T) {
+	acc := NewAccessor(host)
+
+	artistClear := host + "/artist/clear"
+	albumClear := host + "/album/clear"
+	songClear := host + "/song/clear"
+
+	data := map[string]string{"message": "success"}
+	json, _ := json.Marshal(data)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	httpmock.RegisterResponder("PATCH", artistClear,
+		httpmock.NewStringResponder(200, string(json)))
+	httpmock.RegisterResponder("PATCH", albumClear,
+		httpmock.NewStringResponder(200, string(json)))
+	httpmock.RegisterResponder("PATCH", songClear,
+		httpmock.NewStringResponder(200, string(json)))
+
+	err := acc.ClearAll()
+	assert.NoError(t, err)
+}
+
 func TestGetArtistByName(t *testing.T) {
 	acc := NewAccessor(host)
 	name := "Artist name"

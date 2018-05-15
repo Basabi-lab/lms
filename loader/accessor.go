@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 
 	"github.com/Basabi-lab/lms/domains/models"
 )
 
 type AccessorExt interface {
+	ClearAll() error
 	GetArtistByName(name string) (*models.Artist, error)
 	GetAlbumByTitle(title string) ([]*models.Album, error)
 	GetSongByTitle(title string) ([]*models.Song, error)
@@ -35,8 +35,43 @@ func execute(response *http.Response) ([]byte, error) {
 	return body, err
 }
 
-func (a *accessor) LastUpdate() (time.Time, error) {
-	return time.Time{}, nil
+func doPatchClear(url string) (*http.Request, error) {
+	client := &http.Client{}
+
+	req, err := http.NewRequest("PATCH", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+func (a *accessor) ClearAll() error {
+	artistClear := a.Host + "/artist/clear"
+	albumClear := a.Host + "/album/clear"
+	songClear := a.Host + "/song/clear"
+
+	_, err := doPatchClear(artistClear)
+	if err != nil {
+		return err
+	}
+
+	_, err = doPatchClear(albumClear)
+	if err != nil {
+		return err
+	}
+
+	_, err = doPatchClear(songClear)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (a *accessor) GetArtistByName(name string) (*models.Artist, error) {
