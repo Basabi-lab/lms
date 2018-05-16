@@ -25,7 +25,7 @@ func NewLoader(scanner ScannerExt, accessor AccessorExt) LoaderExt {
 func toArtist(info *taglib.Tags) *models.Artist {
 	artist := info.Artist
 	if artist == "" {
-		artist = "Unknow Artist"
+		artist = "Unknown Artist"
 	}
 	return &models.Artist{
 		Name:      artist,
@@ -36,7 +36,7 @@ func toArtist(info *taglib.Tags) *models.Artist {
 func toAlbum(info *taglib.Tags) *models.Album {
 	album := info.Album
 	if album == "" {
-		album = "Unknow Artist"
+		album = "Unknown Album"
 	}
 
 	return &models.Album{
@@ -47,7 +47,13 @@ func toAlbum(info *taglib.Tags) *models.Album {
 
 func toSong(info *taglib.Tags) *models.Song {
 	title := info.Title
+	if title == "" {
+		title = "Unknown Title"
+	}
 	genre := info.Genre
+	if genre == "" {
+		genre = "Unknown Genre"
+	}
 	year := info.Year
 	track := info.Track
 	disc := 0
