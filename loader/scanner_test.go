@@ -31,7 +31,6 @@ func TestScan(t *testing.T) {
 }
 
 func TestScanNotUpdated(t *testing.T) {
-	// TODO: run set_timestamp_song.sh
 	scanner := NewScanner(defPath)
 
 	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
@@ -47,4 +46,8 @@ func TestScanNotUpdated(t *testing.T) {
 		"../tests/song/not_updated2.mp3",
 	}
 	assert.Equal(t, expect, songList)
+}
+
+func TestDequeue(t *testing.T) {
+	assert.Panics(t, func() { dequeue([]string{}) }, "The code did not panic")
 }

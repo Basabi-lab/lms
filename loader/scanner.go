@@ -22,14 +22,6 @@ func NewScanner(path string) ScannerExt {
 	}
 }
 
-func (s *scanner) ls(path string) ([]os.FileInfo, error) {
-	files, err := ioutil.ReadDir(path)
-	if err != nil {
-		return nil, err
-	}
-	return files, nil
-}
-
 func enqueue(list []string, item string) []string {
 	return append(list, item)
 }
@@ -65,17 +57,14 @@ func (s *scanner) Scan() ([]string, error) {
 }
 
 func (s *scanner) ScanNotUpdated(lastUpdate time.Time) ([]string, error) {
-	songList, err := s.Scan()
+	// 存在しないpathを渡されたときにnilではなく[]string{}を返すので、
+	// エラーハンドリングが必要ない
+	songList, _ := s.Scan()
 	notUpdatedList := []string{}
-	if err != nil {
-		return nil, err
-	}
 
 	for _, song := range songList {
-		info, err := os.Stat(song)
-		if err != nil {
-			return nil, err
-		}
+		// 存在しないpathが渡されたときは、ここを通らないので(songListが空配列になるため)、エラーハンドリングは必要ない
+		info, _ := os.Stat(song)
 
 		if !info.ModTime().Before(lastUpdate) {
 			notUpdatedList = append(notUpdatedList, song)
