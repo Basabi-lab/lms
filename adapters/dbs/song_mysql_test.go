@@ -47,3 +47,19 @@ func TestSongGetByID(t *testing.T) {
 
 	assert.Equal(t, expect, song)
 }
+
+func TestSongCreate(t *testing.T) {
+	db, mock := models.ConnectMockDB("test_song_create")
+	defer db.Close()
+
+	ar := NewSongMysql(db)
+
+	expect := models.TestSongData()
+
+	mock.ExpectExec("INSERT INTO").
+		WithArgs(expect.CreatedAt, expect.UpdatedAt, expect.DeletedAt, expect.AlbumID, expect.ArtistID, expect.Title, expect.Genre, expect.Year, expect.Track, expect.Disc, expect.Path).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	_, err := ar.Create(expect)
+	assert.NoError(t, err)
+}
