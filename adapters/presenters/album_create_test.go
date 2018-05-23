@@ -11,9 +11,7 @@ import (
 func TestAlbumCreateResponse(t *testing.T) {
 	pre := NewAlbumCreatePresenter()
 	usecaseResult := usecases.TestAlbumCreateUsecaseResult()
-	expect := TestAlbumCreatePresenterResult()
 
-	ret, err := pre.Response(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
-	assert.Equal(t, expect, ret)
 }

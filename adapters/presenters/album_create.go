@@ -1,17 +1,17 @@
 package presenters
 
 import (
-	"github.com/gin-gonic/gin"
+	"encoding/json"
 
 	"github.com/Basabi-lab/lms/usecases"
 )
 
 type AlbumCreatePresenterExt interface {
-	Response(useResult *usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error)
+	ToByteList(useResult *usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error)
 }
 
 type AlbumCreatePresenterResult struct {
-	Res *gin.H
+	JsonByteList []byte
 }
 
 type albumCreatePresenter struct{}
@@ -20,14 +20,13 @@ func NewAlbumCreatePresenter() AlbumCreatePresenterExt {
 	return &albumCreatePresenter{}
 }
 
-func NewAlbumCreatePresenterResult(res *gin.H) *AlbumCreatePresenterResult {
+func NewAlbumCreatePresenterResult(json []byte) *AlbumCreatePresenterResult {
 	return &AlbumCreatePresenterResult{
-		Res: res,
+		JsonByteList: json,
 	}
 }
 
-func (pre *albumCreatePresenter) Response(useResult *usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error) {
-	res := &gin.H{"message": "success", "id": useResult.ID}
-
-	return NewAlbumCreatePresenterResult(res), nil
+func (pre *albumCreatePresenter) ToByteList(useResult *usecases.AlbumCreateUsecaseResult) (*AlbumCreatePresenterResult, error) {
+	json, _ := json.Marshal(useResult.Album)
+	return NewAlbumCreatePresenterResult(json), nil
 }

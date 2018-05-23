@@ -11,9 +11,7 @@ import (
 func TestSongCreateResponse(t *testing.T) {
 	pre := NewSongCreatePresenter()
 	usecaseResult := usecases.TestSongCreateUsecaseResult()
-	expect := TestSongCreatePresenterResult()
 
-	ret, err := pre.Response(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
-	assert.Equal(t, expect, ret)
 }

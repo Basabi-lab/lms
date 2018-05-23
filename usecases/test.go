@@ -16,8 +16,8 @@ func TestAlbumGetByIDUsecaseResult() *AlbumGetByIDUsecaseResult {
 }
 
 func TestAlbumCreateUsecaseResult() *AlbumCreateUsecaseResult {
-	id := uint(0)
-	return NewAlbumCreateUsecaseResult(id)
+	album := models.TestAlbumData()
+	return NewAlbumCreateUsecaseResult(album)
 }
 
 func TestAlbumClearUsecaseResult() *AlbumClearUsecaseResult {
@@ -37,8 +37,8 @@ func TestSongGetByIDUsecaseResult() *SongGetByIDUsecaseResult {
 }
 
 func TestSongCreateUsecaseResult() *SongCreateUsecaseResult {
-	id := uint(0)
-	return NewSongCreateUsecaseResult(id)
+	song := models.TestSongData()
+	return NewSongCreateUsecaseResult(song)
 }
 
 func TestSongClearUsecaseResult() *SongClearUsecaseResult {
@@ -59,8 +59,8 @@ func TestArtistGetByIDUsecaseResult() *ArtistGetByIDUsecaseResult {
 }
 
 func TestArtistCreateUsecaseResult() *ArtistCreateUsecaseResult {
-	id := uint(0)
-	return NewArtistCreateUsecaseResult(id)
+	artist := models.TestArtistData()
+	return NewArtistCreateUsecaseResult(artist)
 }
 
 func TestArtistClearUsecaseResult() *ArtistClearUsecaseResult {

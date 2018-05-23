@@ -11,9 +11,7 @@ import (
 func TestArtistCreateResponse(t *testing.T) {
 	pre := NewArtistCreatePresenter()
 	usecaseResult := usecases.TestArtistCreateUsecaseResult()
-	expect := TestArtistCreatePresenterResult()
 
-	ret, err := pre.Response(usecaseResult)
+	_, err := pre.ToByteList(usecaseResult)
 	assert.NoError(t, err)
-	assert.Equal(t, expect, ret)
 }

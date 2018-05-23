@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -38,14 +39,14 @@ func TestSongCreateUsecase(t *testing.T) {
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	json := `
 		{
-			"title":"song title",
-			"genre":"song genre",
+			"title":"Song Title",
+			"genre":"Song Genre",
 			"year":2000,
 			"artist_id":1,
 			"album_id":1,
 			"track":1,
-			"album_num": 1,
-			"dir":"/home/sample/song/dir"
+			"disc": 1,
+			"path":"/home/sample/Music/dir"
 		}
 	`
 	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString(json))
@@ -55,5 +56,8 @@ func TestSongCreateUsecase(t *testing.T) {
 	assert.NoError(t, err)
 
 	expect := TestSongCreateUsecaseResult()
+	expect.Song.CreatedAt = time.Time{}
+	expect.Song.UpdatedAt = time.Time{}
+	expect.Song.DeletedAt = nil
 	assert.Equal(t, expect, result)
 }

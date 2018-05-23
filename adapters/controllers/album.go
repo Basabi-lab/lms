@@ -99,13 +99,19 @@ func (h *albumController) Post(c *gin.Context) {
 		return
 	}
 
-	pRes, err := h.albumCreatePre.Response(cRes)
+	pRes, err := h.albumCreatePre.ToByteList(cRes)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	c.JSON(200, pRes.Res)
+	c.Writer.Header().Set("Content-Type", "application/json")
+	c.Writer.WriteHeader(200)
+	_, err = c.Writer.Write(pRes.JsonByteList)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
 }
 
 func (h *albumController) Clear(c *gin.Context) {

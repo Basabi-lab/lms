@@ -8,7 +8,7 @@ import (
 )
 
 type AlbumCreateUsecaseResult struct {
-	ID uint
+	Album *models.Album
 }
 
 type AlbumCreateUsecaseExt interface {
@@ -25,19 +25,20 @@ func NewAlbumCreateUsecase(repo repositories.AlbumRepository) AlbumCreateUsecase
 	}
 }
 
-func NewAlbumCreateUsecaseResult(id uint) *AlbumCreateUsecaseResult {
+func NewAlbumCreateUsecaseResult(album *models.Album) *AlbumCreateUsecaseResult {
 	return &AlbumCreateUsecaseResult{
-		ID: id,
+		Album: album,
 	}
 }
 
 func (use *albumCreateUsecase) Create(c *gin.Context) (*AlbumCreateUsecaseResult, error) {
-	var json models.Album
-	err := c.ShouldBindJSON(&json)
+	var album *models.Album
+	err := c.ShouldBindJSON(&album)
 	if err != nil {
 		return nil, err
 	}
-	id, err := use.repo.Create(&json)
+	id, err := use.repo.Create(album)
+	album.ID = id
 
-	return NewAlbumCreateUsecaseResult(id), err
+	return NewAlbumCreateUsecaseResult(album), err
 }

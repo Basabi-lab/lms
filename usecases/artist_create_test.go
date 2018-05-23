@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -36,12 +37,15 @@ func TestArtistCreateUsecase(t *testing.T) {
 	use := NewArtistCreateUsecase(newArtistCreateMysqlMock(db))
 
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
-	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString("{\"album_id\": 1, \"name\":\"artist name\", \"biography\":\"artist biography\"}"))
+	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString("{\"name\":\"Artist name\", \"biography\":\"Artist biography\"}"))
 	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
 
 	result, err := use.Create(c)
 	assert.NoError(t, err)
 
 	expect := TestArtistCreateUsecaseResult()
+	expect.Artist.CreatedAt = time.Time{}
+	expect.Artist.UpdatedAt = time.Time{}
+	expect.Artist.DeletedAt = nil
 	assert.Equal(t, expect, result)
 }
