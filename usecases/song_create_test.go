@@ -32,6 +32,19 @@ func (mock *songCreateMysqlMock) Create(cd *models.Song) (uint, error) {
 	return 0, nil
 }
 
+func TestSongCreateUsecaseFault(t *testing.T) {
+	db := &gorm.DB{}
+	use := NewSongCreateUsecase(newSongCreateMysqlMock(db))
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	json := ""
+	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString(json))
+	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
+
+	_, err := use.Create(c)
+	assert.Error(t, err)
+}
+
 func TestSongCreateUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewSongCreateUsecase(newSongCreateMysqlMock(db))

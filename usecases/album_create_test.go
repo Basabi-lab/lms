@@ -32,6 +32,18 @@ func newAlbumCreateMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 	}
 }
 
+func TestAlbumCreateUsecaseFault(t *testing.T) {
+	db := &gorm.DB{}
+	use := NewAlbumCreateUsecase(newAlbumCreateMysqlMock(db))
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString(""))
+	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
+
+	_, err := use.Create(c)
+	assert.Error(t, err)
+}
+
 func TestAlbumCreateUsecase(t *testing.T) {
 	db := &gorm.DB{}
 	use := NewAlbumCreateUsecase(newAlbumCreateMysqlMock(db))
