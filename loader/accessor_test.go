@@ -20,9 +20,9 @@ var host string = "http://localhost:8080"
 func TestClearAll(t *testing.T) {
 	acc := NewAccessor(host)
 
-	artistClear := host + "/artist/clear"
-	albumClear := host + "/album/clear"
-	songClear := host + "/song/clear"
+	artistClear := host + "/api/artist/clear"
+	albumClear := host + "/api/album/clear"
+	songClear := host + "/api/song/clear"
 
 	data := map[string]string{"message": "success"}
 	json, _ := json.Marshal(data)
