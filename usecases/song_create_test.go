@@ -11,26 +11,20 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type songCreateMysqlMock struct {
 	db *gorm.DB
+	dbs.MixInSongMysql
 }
 
 func newSongCreateMysqlMock(db *gorm.DB) repositories.SongRepository {
 	return &songCreateMysqlMock{
 		db: db,
 	}
-}
-
-func (mock *songCreateMysqlMock) GetByID(id uint) (*models.Song, error) {
-	return nil, nil
-}
-
-func (mock *songCreateMysqlMock) GetAll() ([]*models.Song, error) {
-	return nil, nil
 }
 
 func (mock *songCreateMysqlMock) Create(cd *models.Song) (uint, error) {

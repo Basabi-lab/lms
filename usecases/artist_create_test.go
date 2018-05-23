@@ -11,30 +11,24 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type artistCreateMysqlMock struct {
 	db *gorm.DB
+	dbs.MixInArtistMysql
+}
+
+func (mock *artistCreateMysqlMock) Create(cd *models.Artist) (uint, error) {
+	return 0, nil
 }
 
 func newArtistCreateMysqlMock(db *gorm.DB) repositories.ArtistRepository {
 	return &artistCreateMysqlMock{
 		db: db,
 	}
-}
-
-func (mock *artistCreateMysqlMock) GetByID(id uint) (*models.Artist, error) {
-	return nil, nil
-}
-
-func (mock *artistCreateMysqlMock) GetAll() ([]*models.Artist, error) {
-	return nil, nil
-}
-
-func (mock *artistCreateMysqlMock) Create(cd *models.Artist) (uint, error) {
-	return 0, nil
 }
 
 func TestArtistCreateUsecase(t *testing.T) {
