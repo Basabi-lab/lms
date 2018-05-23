@@ -20,6 +20,11 @@ func TestAlbumCreateUsecaseResult() *AlbumCreateUsecaseResult {
 	return NewAlbumCreateUsecaseResult(id)
 }
 
+func TestAlbumClearUsecaseResult() *AlbumClearUsecaseResult {
+	var err error = nil
+	return NewAlbumClearUsecaseResult(err)
+}
+
 func TestSongAllUsecaseResult() *SongAllUsecaseResult {
 	song := models.TestSongData()
 	songs := []*models.Song{song, song}
@@ -34,6 +39,11 @@ func TestSongGetByIDUsecaseResult() *SongGetByIDUsecaseResult {
 func TestSongCreateUsecaseResult() *SongCreateUsecaseResult {
 	id := uint(0)
 	return NewSongCreateUsecaseResult(id)
+}
+
+func TestSongClearUsecaseResult() *SongClearUsecaseResult {
+	var err error = nil
+	return NewSongClearUsecaseResult(err)
 }
 
 func TestArtistAllUsecaseResult() *ArtistAllUsecaseResult {
@@ -51,4 +61,9 @@ func TestArtistGetByIDUsecaseResult() *ArtistGetByIDUsecaseResult {
 func TestArtistCreateUsecaseResult() *ArtistCreateUsecaseResult {
 	id := uint(0)
 	return NewArtistCreateUsecaseResult(id)
+}
+
+func TestArtistClearUsecaseResult() *ArtistClearUsecaseResult {
+	var err error = nil
+	return NewArtistClearUsecaseResult(err)
 }
