@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -99,5 +100,7 @@ func gormConnect() *gorm.DB {
 func main() {
 	db := gormConnect()
 	r := setupRouter(db)
+
+	r.Use(cors.Default())
 	r.Run(":" + os.Getenv("PORT"))
 }
