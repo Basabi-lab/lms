@@ -43,3 +43,7 @@ func (m *songMysql) Create(song *models.Song) (uint, error) {
 
 	return song.ID, err
 }
+
+type MixInSongMysql struct {
+	songMysql
+}
