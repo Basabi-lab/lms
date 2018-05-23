@@ -11,15 +11,18 @@ type ArtistControllerExt interface {
 	GetAll(c *gin.Context)
 	GetById(c *gin.Context)
 	Post(c *gin.Context)
+	Clear(c *gin.Context)
 }
 
 type artistController struct {
-	aau   usecases.ArtistAllUsecaseExt
-	aap   presenters.ArtistAllPresenterExt
-	agbiu usecases.ArtistGetByIDUsecaseExt
-	agbip presenters.ArtistGetByIDPresenterExt
-	acu   usecases.ArtistCreateUsecaseExt
-	acp   presenters.ArtistCreatePresenterExt
+	aau            usecases.ArtistAllUsecaseExt
+	aap            presenters.ArtistAllPresenterExt
+	agbiu          usecases.ArtistGetByIDUsecaseExt
+	agbip          presenters.ArtistGetByIDPresenterExt
+	acu            usecases.ArtistCreateUsecaseExt
+	acp            presenters.ArtistCreatePresenterExt
+	artistClearUse usecases.ArtistClearUsecaseExt
+	artistClearPre presenters.ArtistClearPresenterExt
 }
 
 func NewArtistController(
@@ -29,15 +32,19 @@ func NewArtistController(
 	agbip presenters.ArtistGetByIDPresenterExt,
 	acu usecases.ArtistCreateUsecaseExt,
 	acp presenters.ArtistCreatePresenterExt,
+	artistClearUse usecases.ArtistClearUsecaseExt,
+	artistClearPre presenters.ArtistClearPresenterExt,
 ) ArtistControllerExt {
 
 	return &artistController{
-		aau:   aau,
-		aap:   aap,
-		agbiu: agbiu,
-		agbip: agbip,
-		acu:   acu,
-		acp:   acp,
+		aau:            aau,
+		aap:            aap,
+		agbiu:          agbiu,
+		agbip:          agbip,
+		acu:            acu,
+		acp:            acp,
+		artistClearUse: artistClearUse,
+		artistClearPre: artistClearPre,
 	}
 }
 
@@ -93,6 +100,22 @@ func (h *artistController) Post(c *gin.Context) {
 	}
 
 	pRes, err := h.acp.Response(cRes)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	c.JSON(200, pRes.Res)
+}
+
+func (h *artistController) Clear(c *gin.Context) {
+	cRes, err := h.artistClearUse.Clear(c)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	pRes, err := h.artistClearPre.Response(cRes)
 	if err != nil {
 		ResponseError(c, err)
 		return

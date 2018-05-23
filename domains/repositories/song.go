@@ -6,4 +6,5 @@ type SongRepository interface {
 	GetByID(id uint) (*models.Song, error)
 	GetAll() ([]*models.Song, error)
 	Create(song *models.Song) (uint, error)
+	Clear() error
 }

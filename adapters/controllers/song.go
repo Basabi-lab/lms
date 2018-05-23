@@ -11,15 +11,18 @@ type SongControllerExt interface {
 	GetAll(c *gin.Context)
 	GetById(c *gin.Context)
 	Post(c *gin.Context)
+	Clear(c *gin.Context)
 }
 
 type songController struct {
-	sau   usecases.SongAllUsecaseExt
-	sap   presenters.SongAllPresenterExt
-	sgbiu usecases.SongGetByIDUsecaseExt
-	sgbip presenters.SongGetByIDPresenterExt
-	scu   usecases.SongCreateUsecaseExt
-	scp   presenters.SongCreatePresenterExt
+	sau          usecases.SongAllUsecaseExt
+	sap          presenters.SongAllPresenterExt
+	sgbiu        usecases.SongGetByIDUsecaseExt
+	sgbip        presenters.SongGetByIDPresenterExt
+	scu          usecases.SongCreateUsecaseExt
+	scp          presenters.SongCreatePresenterExt
+	songClearUse usecases.SongClearUsecaseExt
+	songClearPre presenters.SongClearPresenterExt
 }
 
 func NewSongController(
@@ -29,15 +32,19 @@ func NewSongController(
 	sgbip presenters.SongGetByIDPresenterExt,
 	scu usecases.SongCreateUsecaseExt,
 	scp presenters.SongCreatePresenterExt,
+	songClearUse usecases.SongClearUsecaseExt,
+	songClearPre presenters.SongClearPresenterExt,
 ) SongControllerExt {
 
 	return &songController{
-		sau:   sau,
-		sap:   sap,
-		sgbiu: sgbiu,
-		sgbip: sgbip,
-		scu:   scu,
-		scp:   scp,
+		sau:          sau,
+		sap:          sap,
+		sgbiu:        sgbiu,
+		sgbip:        sgbip,
+		scu:          scu,
+		scp:          scp,
+		songClearUse: songClearUse,
+		songClearPre: songClearPre,
 	}
 }
 
@@ -93,6 +100,22 @@ func (h *songController) Post(c *gin.Context) {
 	}
 
 	pRes, err := h.scp.Response(cRes)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	c.JSON(200, pRes.Res)
+}
+
+func (h *songController) Clear(c *gin.Context) {
+	cRes, err := h.songClearUse.Clear(c)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	pRes, err := h.songClearPre.Response(cRes)
 	if err != nil {
 		ResponseError(c, err)
 		return

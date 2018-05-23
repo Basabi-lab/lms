@@ -37,11 +37,14 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 			agbip,
 			acc,
 			acp,
+			usecases.NewAlbumClearUsecase(ar),
+			presenters.NewAlbumClearPresenter(),
 		)
 
 		api.GET("/album", ac.GetAll)
 		api.GET("/album/:id", ac.GetById)
 		api.POST("/album", ac.Post)
+		api.PATCH("/album/clear", ac.Clear)
 
 		sr := dbs.NewSongMysql(db)
 
@@ -59,11 +62,14 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 			sgbip,
 			scc,
 			scp,
+			usecases.NewSongClearUsecase(sr),
+			presenters.NewSongClearPresenter(),
 		)
 
 		api.GET("/song", sc.GetAll)
 		api.GET("/song/:id", sc.GetById)
 		api.POST("/song", sc.Post)
+		api.PATCH("/song/clear", sc.Clear)
 
 		artistRepo := dbs.NewArtistMysql(db)
 
@@ -81,12 +87,14 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 			artistCreateP,
 			artistGetByIDU,
 			artistGetByIDP,
+			usecases.NewArtistClearUsecase(artistRepo),
+			presenters.NewArtistClearPresenter(),
 		)
 
 		api.GET("/artist", artistCtrl.GetAll)
 		api.GET("/artist/:id", artistCtrl.GetById)
 		api.POST("/artist", artistCtrl.Post)
-
+		api.PATCH("/artist/clear", artistCtrl.Clear)
 	}
 
 	return r

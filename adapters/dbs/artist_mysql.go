@@ -38,6 +38,12 @@ func (c *artistMysql) Create(artist *models.Artist) (uint, error) {
 	return artist.ID, err
 }
 
+func (c *artistMysql) Clear() error {
+	err := c.db.Delete(&models.Artist{}).Error
+
+	return err
+}
+
 type MixInArtistMysql struct {
 	artistMysql
 }

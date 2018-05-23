@@ -63,3 +63,20 @@ func TestArtistCreate(t *testing.T) {
 	_, err := ar.Create(expect)
 	assert.NoError(t, err)
 }
+
+func TestArtistClear(t *testing.T) {
+	db, mock := models.ConnectMockDB("test_artist_clear")
+	defer db.Close()
+
+	// ormのdeleteはsoft deleteなので、updateでdelete_atが更新される
+	// このとき、任意のtimeをdelete_atに挿入できないのでテストできない
+	// なので、とりあえず、update命令をキャッチはしているが、argは指定していない
+	mock.ExpectExec("UPDATE").
+		WithArgs().
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	ar := NewArtistMysql(db)
+
+	err := ar.Clear()
+	assert.NoError(t, err)
+}
