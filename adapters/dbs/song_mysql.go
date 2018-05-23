@@ -12,12 +12,6 @@ type songMysql struct {
 	db *gorm.DB
 }
 
-type MixInSongRepository struct{}
-
-func (mmr *MixInSongRepository) SongRepository(db *gorm.DB) repositories.SongRepository {
-	return NewSongMysql(db)
-}
-
 func NewSongMysql(db *gorm.DB) repositories.SongRepository {
 	return &songMysql{
 		db: db,

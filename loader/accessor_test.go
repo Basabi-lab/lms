@@ -17,6 +17,24 @@ type testAccessor struct{}
 
 var host string = "http://localhost:8080"
 
+func TestDoPostClear(t *testing.T) {
+	data := map[string]string{"message": "success"}
+	json, _ := json.Marshal(data)
+
+	/* Host Name Dont Resolve */
+	_, err := doPatchClear("")
+	assert.Error(t, err)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	httpmock.RegisterResponder("PATCH", host,
+		httpmock.NewStringResponder(200, string(json)))
+
+	_, err = doPatchClear(host)
+	assert.NoError(t, err)
+}
+
 func TestClearAll(t *testing.T) {
 	acc := NewAccessor(host)
 
@@ -30,14 +48,26 @@ func TestClearAll(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
+	/* Fault /api/artist/clear API */
+	err := acc.ClearAll()
+	assert.Error(t, err)
 	httpmock.RegisterResponder("PATCH", artistClear,
 		httpmock.NewStringResponder(200, string(json)))
+
+	/* Fault /api/album/clear API */
+	err = acc.ClearAll()
+	assert.Error(t, err)
 	httpmock.RegisterResponder("PATCH", albumClear,
 		httpmock.NewStringResponder(200, string(json)))
+
+	/* Fault /api/song/clear API */
+	err = acc.ClearAll()
+	assert.Error(t, err)
 	httpmock.RegisterResponder("PATCH", songClear,
 		httpmock.NewStringResponder(200, string(json)))
 
-	err := acc.ClearAll()
+	/* success ClearaAll */
+	err = acc.ClearAll()
 	assert.NoError(t, err)
 }
 
