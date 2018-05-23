@@ -38,6 +38,12 @@ func (c *albumMysql) Create(album *models.Album) (uint, error) {
 	return album.ID, err
 }
 
+func (c *albumMysql) Clear() error {
+	err := c.db.Delete(&models.Album{}).Error
+
+	return err
+}
+
 type MixInAlbumMysql struct {
 	albumMysql
 }

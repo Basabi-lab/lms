@@ -44,6 +44,12 @@ func (m *songMysql) Create(song *models.Song) (uint, error) {
 	return song.ID, err
 }
 
+func (c *songMysql) Clear() error {
+	err := c.db.Delete(&models.Song{}).Error
+
+	return err
+}
+
 type MixInSongMysql struct {
 	songMysql
 }
