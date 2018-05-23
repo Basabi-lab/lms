@@ -37,3 +37,7 @@ func (c *artistMysql) Create(artist *models.Artist) (uint, error) {
 
 	return artist.ID, err
 }
+
+type MixInArtistMysql struct {
+	artistMysql
+}

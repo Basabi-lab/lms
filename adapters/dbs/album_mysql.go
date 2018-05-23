@@ -37,3 +37,7 @@ func (c *albumMysql) Create(album *models.Album) (uint, error) {
 
 	return album.ID, err
 }
+
+type MixInAlbumMysql struct {
+	albumMysql
+}

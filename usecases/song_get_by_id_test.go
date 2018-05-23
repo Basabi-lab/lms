@@ -7,12 +7,14 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type songSongGetByIDMysqlMock struct {
 	db *gorm.DB
+	dbs.MixInSongMysql
 }
 
 func newSongGetByIDMysqlMock(db *gorm.DB) repositories.SongRepository {
@@ -25,14 +27,6 @@ func (mock *songSongGetByIDMysqlMock) GetByID(id uint) (*models.Song, error) {
 	song := models.TestSongData()
 
 	return song, nil
-}
-
-func (mock *songSongGetByIDMysqlMock) GetAll() ([]*models.Song, error) {
-	return nil, nil
-}
-
-func (mock *songSongGetByIDMysqlMock) Create(cd *models.Song) (uint, error) {
-	return 0, nil
 }
 
 func TestSongGetByIDUsecase(t *testing.T) {

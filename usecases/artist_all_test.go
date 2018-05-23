@@ -7,12 +7,14 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type artistAllMysqlMock struct {
 	db *gorm.DB
+	dbs.MixInArtistMysql
 }
 
 func newArtistAllMysqlMock(db *gorm.DB) repositories.ArtistRepository {
@@ -21,18 +23,10 @@ func newArtistAllMysqlMock(db *gorm.DB) repositories.ArtistRepository {
 	}
 }
 
-func (mock *artistAllMysqlMock) GetByID(id uint) (*models.Artist, error) {
-	return nil, nil
-}
-
 func (mock *artistAllMysqlMock) GetAll() ([]*models.Artist, error) {
 	artist := models.TestArtistData()
 
 	return []*models.Artist{artist, artist}, nil
-}
-
-func (mock *artistAllMysqlMock) Create(cd *models.Artist) (uint, error) {
-	return 0, nil
 }
 
 func TestArtistAllUsecase(t *testing.T) {

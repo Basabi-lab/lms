@@ -7,12 +7,14 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/Basabi-lab/lms/adapters/dbs"
 	"github.com/Basabi-lab/lms/domains/models"
 	"github.com/Basabi-lab/lms/domains/repositories"
 )
 
 type albumAlbumGetByIDMysqlMock struct {
 	db *gorm.DB
+	dbs.MixInAlbumMysql
 }
 
 func newAlbumGetByIDMysqlMock(db *gorm.DB) repositories.AlbumRepository {
@@ -25,14 +27,6 @@ func (mock *albumAlbumGetByIDMysqlMock) GetByID(id uint) (*models.Album, error) 
 	album := models.TestAlbumData()
 
 	return album, nil
-}
-
-func (mock *albumAlbumGetByIDMysqlMock) GetAll() ([]*models.Album, error) {
-	return nil, nil
-}
-
-func (mock *albumAlbumGetByIDMysqlMock) Create(cd *models.Album) (uint, error) {
-	return 0, nil
 }
 
 func TestAlbumGetByIDUsecase(t *testing.T) {
