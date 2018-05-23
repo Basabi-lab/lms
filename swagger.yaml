@@ -80,6 +80,10 @@ paths:
                 type: string
                 format: string
                 example: album1
+              artist_id:
+                type: integer
+                format: int64
+                example: 0
               genre:
                 type: string
                 format: string
@@ -94,14 +98,24 @@ paths:
           schema:
             type: object
             properties:
-              message:
-                type: string
-                format: string
-                example: success
               id:
                 type: integer
                 format: int64
                 example: 0
+              title:
+                type: string
+                example: album title
+              artist_id:
+                type: integer
+                format: int64
+                example: 0
+              genre:
+                type: string
+                example: Rock
+              year:
+                type: integer
+                format: int64
+                example: 2000
 
   /album/{album_id}:
     get:
@@ -148,6 +162,22 @@ paths:
               Error:
                 type: string
                 format: string
+  /album/clear:
+    patch:
+      tags:
+        - Album API
+      summary: Clear all album info
+      description: Clear all album information on server side.
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+                example: success
   /song:
     get:
       tags:
@@ -265,14 +295,41 @@ paths:
           schema:
             type: object
             properties:
-              message:
-                type: string
-                format: string
-                example: success
               id:
                 type: integer
                 format: int64
                 example: 0
+              title:
+                type: string
+                format: string
+                example: album title
+              album_id:
+                type: integer
+                format: int64
+                example: 0
+              artist_id:
+                type: integer
+                format: int64
+                example: 0
+              genre:
+                type: string
+                example: Rock
+              year:
+                type: integer
+                format: int64
+                example: 2000
+              track:
+                type: integer
+                format: int64
+                example: 1
+              album_num:
+                type: integer
+                format: int64
+                example: 1
+              dir:
+                type: string
+                format: string
+                example: "/path/to/song"
               
   /song/{song_id}:
     get:
@@ -335,6 +392,22 @@ paths:
               Error:
                 type: string
                 format: string
+  /song/clear:
+    patch:
+      tags:
+        - Song API
+      summary: Clear all song info
+      description: Clear all song information on server side.
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+                example: success
   /artist:
     get:
       tags:
@@ -414,14 +487,23 @@ paths:
           schema:
             type: object
             properties:
-              message:
-                type: string
-                format: string
-                example: success
               id:
                 type: integer
                 format: int64
                 example: 0
+              album_id:
+                type: integer
+                format: int64
+                example: 0
+              name:
+                type: string
+                format: string
+                example: artist name
+              biography:
+                type: string
+                format: string
+                example: artist biography
+
   /artist/{artist_id}:
     get:
       tags:
@@ -465,3 +547,19 @@ paths:
               Error:
                 type: string
                 format: string
+  /artist/clear:
+    patch:
+      tags:
+        - Artist API
+      summary: Clear all artist info
+      description: Clear all artist information on server side.
+      responses:
+        '200':
+          description: good response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+                example: success
