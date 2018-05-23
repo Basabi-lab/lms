@@ -11,15 +11,18 @@ type AlbumControllerExt interface {
 	GetAll(c *gin.Context)
 	GetById(c *gin.Context)
 	Post(c *gin.Context)
+	Clear(c *gin.Context)
 }
 
 type albumController struct {
-	aau   usecases.AlbumAllUsecaseExt
-	aap   presenters.AlbumAllPresenterExt
-	agbiu usecases.AlbumGetByIDUsecaseExt
-	agbip presenters.AlbumGetByIDPresenterExt
-	acu   usecases.AlbumCreateUsecaseExt
-	acp   presenters.AlbumCreatePresenterExt
+	aau           usecases.AlbumAllUsecaseExt
+	aap           presenters.AlbumAllPresenterExt
+	agbiu         usecases.AlbumGetByIDUsecaseExt
+	agbip         presenters.AlbumGetByIDPresenterExt
+	acu           usecases.AlbumCreateUsecaseExt
+	acp           presenters.AlbumCreatePresenterExt
+	albumClearUse usecases.AlbumClearUsecaseExt
+	albumClearPre presenters.AlbumClearPresenterExt
 }
 
 func NewAlbumController(
@@ -29,15 +32,19 @@ func NewAlbumController(
 	agbip presenters.AlbumGetByIDPresenterExt,
 	acu usecases.AlbumCreateUsecaseExt,
 	acp presenters.AlbumCreatePresenterExt,
+	albumClearUse usecases.AlbumClearUsecaseExt,
+	albumClearPre presenters.AlbumClearPresenterExt,
 ) AlbumControllerExt {
 
 	return &albumController{
-		aau:   aau,
-		aap:   aap,
-		agbiu: agbiu,
-		agbip: agbip,
-		acu:   acu,
-		acp:   acp,
+		aau:           aau,
+		aap:           aap,
+		agbiu:         agbiu,
+		agbip:         agbip,
+		acu:           acu,
+		acp:           acp,
+		albumClearUse: albumClearUse,
+		albumClearPre: albumClearPre,
 	}
 }
 
@@ -93,6 +100,22 @@ func (h *albumController) Post(c *gin.Context) {
 	}
 
 	pRes, err := h.acp.Response(cRes)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	c.JSON(200, pRes.Res)
+}
+
+func (h *albumController) Clear(c *gin.Context) {
+	cRes, err := h.albumClearUse.Clear(c)
+	if err != nil {
+		ResponseError(c, err)
+		return
+	}
+
+	pRes, err := h.albumClearPre.Response(cRes)
 	if err != nil {
 		ResponseError(c, err)
 		return
