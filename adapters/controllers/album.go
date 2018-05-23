@@ -15,47 +15,47 @@ type AlbumControllerExt interface {
 }
 
 type albumController struct {
-	aau           usecases.AlbumAllUsecaseExt
-	aap           presenters.AlbumAllPresenterExt
-	agbiu         usecases.AlbumGetByIDUsecaseExt
-	agbip         presenters.AlbumGetByIDPresenterExt
-	acu           usecases.AlbumCreateUsecaseExt
-	acp           presenters.AlbumCreatePresenterExt
-	albumClearUse usecases.AlbumClearUsecaseExt
-	albumClearPre presenters.AlbumClearPresenterExt
+	albumAllUse     usecases.AlbumAllUsecaseExt
+	albumAllPre     presenters.AlbumAllPresenterExt
+	albumGetByIDUse usecases.AlbumGetByIDUsecaseExt
+	albumGetByIDPre presenters.AlbumGetByIDPresenterExt
+	albumCreateUse  usecases.AlbumCreateUsecaseExt
+	albumCreatePre  presenters.AlbumCreatePresenterExt
+	albumClearUse   usecases.AlbumClearUsecaseExt
+	albumClearPre   presenters.AlbumClearPresenterExt
 }
 
 func NewAlbumController(
-	aau usecases.AlbumAllUsecaseExt,
-	aap presenters.AlbumAllPresenterExt,
-	agbiu usecases.AlbumGetByIDUsecaseExt,
-	agbip presenters.AlbumGetByIDPresenterExt,
-	acu usecases.AlbumCreateUsecaseExt,
-	acp presenters.AlbumCreatePresenterExt,
+	albumAllUse usecases.AlbumAllUsecaseExt,
+	albumAllPre presenters.AlbumAllPresenterExt,
+	albumGetByIDUse usecases.AlbumGetByIDUsecaseExt,
+	albumGetByIDPre presenters.AlbumGetByIDPresenterExt,
+	albumCreateUse usecases.AlbumCreateUsecaseExt,
+	albumCreatePre presenters.AlbumCreatePresenterExt,
 	albumClearUse usecases.AlbumClearUsecaseExt,
 	albumClearPre presenters.AlbumClearPresenterExt,
 ) AlbumControllerExt {
 
 	return &albumController{
-		aau:           aau,
-		aap:           aap,
-		agbiu:         agbiu,
-		agbip:         agbip,
-		acu:           acu,
-		acp:           acp,
-		albumClearUse: albumClearUse,
-		albumClearPre: albumClearPre,
+		albumAllUse:     albumAllUse,
+		albumAllPre:     albumAllPre,
+		albumGetByIDUse: albumGetByIDUse,
+		albumGetByIDPre: albumGetByIDPre,
+		albumCreateUse:  albumCreateUse,
+		albumCreatePre:  albumCreatePre,
+		albumClearUse:   albumClearUse,
+		albumClearPre:   albumClearPre,
 	}
 }
 
 func (h *albumController) GetAll(c *gin.Context) {
-	albums, err := h.aau.All(c)
+	albums, err := h.albumAllUse.All(c)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	json, err := h.aap.ToByteList(albums)
+	json, err := h.albumAllPre.ToByteList(albums)
 	if err != nil {
 		ResponseError(c, err)
 		return
@@ -71,13 +71,13 @@ func (h *albumController) GetAll(c *gin.Context) {
 }
 
 func (h *albumController) GetById(c *gin.Context) {
-	album, err := h.agbiu.GetByID(c)
+	album, err := h.albumGetByIDUse.GetByID(c)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	json, err := h.agbip.ToByteList(album)
+	json, err := h.albumGetByIDPre.ToByteList(album)
 	if err != nil {
 		ResponseError(c, err)
 		return
@@ -93,13 +93,13 @@ func (h *albumController) GetById(c *gin.Context) {
 }
 
 func (h *albumController) Post(c *gin.Context) {
-	cRes, err := h.acu.Create(c)
+	cRes, err := h.albumCreateUse.Create(c)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	pRes, err := h.acp.Response(cRes)
+	pRes, err := h.albumCreatePre.Response(cRes)
 	if err != nil {
 		ResponseError(c, err)
 		return

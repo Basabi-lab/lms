@@ -15,47 +15,47 @@ type SongControllerExt interface {
 }
 
 type songController struct {
-	sau          usecases.SongAllUsecaseExt
-	sap          presenters.SongAllPresenterExt
-	sgbiu        usecases.SongGetByIDUsecaseExt
-	sgbip        presenters.SongGetByIDPresenterExt
-	scu          usecases.SongCreateUsecaseExt
-	scp          presenters.SongCreatePresenterExt
-	songClearUse usecases.SongClearUsecaseExt
-	songClearPre presenters.SongClearPresenterExt
+	songAllUse     usecases.SongAllUsecaseExt
+	songAllPre     presenters.SongAllPresenterExt
+	songGetByIDUse usecases.SongGetByIDUsecaseExt
+	songGetByIDPre presenters.SongGetByIDPresenterExt
+	songCreateUse  usecases.SongCreateUsecaseExt
+	songCreatePre  presenters.SongCreatePresenterExt
+	songClearUse   usecases.SongClearUsecaseExt
+	songClearPre   presenters.SongClearPresenterExt
 }
 
 func NewSongController(
-	sau usecases.SongAllUsecaseExt,
-	sap presenters.SongAllPresenterExt,
-	sgbiu usecases.SongGetByIDUsecaseExt,
-	sgbip presenters.SongGetByIDPresenterExt,
-	scu usecases.SongCreateUsecaseExt,
-	scp presenters.SongCreatePresenterExt,
+	songAllUse usecases.SongAllUsecaseExt,
+	songAllPre presenters.SongAllPresenterExt,
+	songGetByIDUse usecases.SongGetByIDUsecaseExt,
+	songGetByIDPre presenters.SongGetByIDPresenterExt,
+	songCreateUse usecases.SongCreateUsecaseExt,
+	songCreatePre presenters.SongCreatePresenterExt,
 	songClearUse usecases.SongClearUsecaseExt,
 	songClearPre presenters.SongClearPresenterExt,
 ) SongControllerExt {
 
 	return &songController{
-		sau:          sau,
-		sap:          sap,
-		sgbiu:        sgbiu,
-		sgbip:        sgbip,
-		scu:          scu,
-		scp:          scp,
-		songClearUse: songClearUse,
-		songClearPre: songClearPre,
+		songAllUse:     songAllUse,
+		songAllPre:     songAllPre,
+		songGetByIDUse: songGetByIDUse,
+		songGetByIDPre: songGetByIDPre,
+		songCreateUse:  songCreateUse,
+		songCreatePre:  songCreatePre,
+		songClearUse:   songClearUse,
+		songClearPre:   songClearPre,
 	}
 }
 
 func (h *songController) GetAll(c *gin.Context) {
-	songs, err := h.sau.All(c)
+	songs, err := h.songAllUse.All(c)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	json, err := h.sap.ToByteList(songs)
+	json, err := h.songAllPre.ToByteList(songs)
 	if err != nil {
 		ResponseError(c, err)
 		return
@@ -71,13 +71,13 @@ func (h *songController) GetAll(c *gin.Context) {
 }
 
 func (h *songController) GetById(c *gin.Context) {
-	song, err := h.sgbiu.GetByID(c)
+	song, err := h.songGetByIDUse.GetByID(c)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	json, err := h.sgbip.ToByteList(song)
+	json, err := h.songGetByIDPre.ToByteList(song)
 	if err != nil {
 		ResponseError(c, err)
 		return
@@ -93,13 +93,13 @@ func (h *songController) GetById(c *gin.Context) {
 }
 
 func (h *songController) Post(c *gin.Context) {
-	cRes, err := h.scu.Create(c)
+	cRes, err := h.songCreateUse.Create(c)
 	if err != nil {
 		ResponseError(c, err)
 		return
 	}
 
-	pRes, err := h.scp.Response(cRes)
+	pRes, err := h.songCreatePre.Response(cRes)
 	if err != nil {
 		ResponseError(c, err)
 		return
