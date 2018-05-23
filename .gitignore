@@ -1,3 +1,6 @@
 lms
 main
 
+deploy
+!cmd/deploy
+
