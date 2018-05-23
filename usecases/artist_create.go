@@ -8,7 +8,7 @@ import (
 )
 
 type ArtistCreateUsecaseResult struct {
-	ID uint
+	Artist *models.Artist
 }
 
 type ArtistCreateUsecaseExt interface {
@@ -25,19 +25,20 @@ func NewArtistCreateUsecase(repo repositories.ArtistRepository) ArtistCreateUsec
 	}
 }
 
-func NewArtistCreateUsecaseResult(id uint) *ArtistCreateUsecaseResult {
+func NewArtistCreateUsecaseResult(artist *models.Artist) *ArtistCreateUsecaseResult {
 	return &ArtistCreateUsecaseResult{
-		ID: id,
+		Artist: artist,
 	}
 }
 
 func (use *artistCreateUsecase) Create(c *gin.Context) (*ArtistCreateUsecaseResult, error) {
-	var json models.Artist
-	err := c.ShouldBindJSON(&json)
+	var artist *models.Artist
+	err := c.ShouldBindJSON(&artist)
 	if err != nil {
 		return nil, err
 	}
-	id, err := use.repo.Create(&json)
+	id, err := use.repo.Create(artist)
+	artist.ID = id
 
-	return NewArtistCreateUsecaseResult(id), err
+	return NewArtistCreateUsecaseResult(artist), err
 }

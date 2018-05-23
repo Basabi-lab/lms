@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -21,14 +22,14 @@ type albumCreateMysqlMock struct {
 	dbs.MixInAlbumMysql
 }
 
+func (mock *albumCreateMysqlMock) Create(cd *models.Album) (uint, error) {
+	return 0, nil
+}
+
 func newAlbumCreateMysqlMock(db *gorm.DB) repositories.AlbumRepository {
 	return &albumCreateMysqlMock{
 		db: db,
 	}
-}
-
-func (mock *albumCreateMysqlMock) Create(cd *models.Album) (uint, error) {
-	return 0, nil
 }
 
 func TestAlbumCreateUsecase(t *testing.T) {
@@ -36,12 +37,15 @@ func TestAlbumCreateUsecase(t *testing.T) {
 	use := NewAlbumCreateUsecase(newAlbumCreateMysqlMock(db))
 
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
-	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString("{\"title\":\"bar\", \"genre\":\"foo\", \"year\":2000}"))
+	c.Request, _ = http.NewRequest("POST", "/", bytes.NewBufferString("{\"title\":\"Album title\", \"artist_id\":1}"))
 	c.Request.Header.Add("Content-Type", binding.MIMEJSON)
 
 	result, err := use.Create(c)
 	assert.NoError(t, err)
 
 	expect := TestAlbumCreateUsecaseResult()
+	expect.Album.CreatedAt = time.Time{}
+	expect.Album.UpdatedAt = time.Time{}
+	expect.Album.DeletedAt = nil
 	assert.Equal(t, expect, result)
 }
