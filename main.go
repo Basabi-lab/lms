@@ -21,72 +21,51 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 
 	api := r.Group("/api")
 	{
-		ar := dbs.NewAlbumMysql(db)
+		albumRepo := dbs.NewAlbumMysql(db)
 
-		aac := usecases.NewAlbumAllUsecase(ar)
-		aap := presenters.NewAlbumAllPresenter()
-		agbiu := usecases.NewAlbumGetByIDUsecase(ar)
-		agbip := presenters.NewAlbumGetByIDPresenter()
-		acc := usecases.NewAlbumCreateUsecase(ar)
-		acp := presenters.NewAlbumCreatePresenter()
-
-		ac := controllers.NewAlbumController(
-			aac,
-			aap,
-			agbiu,
-			agbip,
-			acc,
-			acp,
-			usecases.NewAlbumClearUsecase(ar),
+		albumCtrl := controllers.NewAlbumController(
+			usecases.NewAlbumAllUsecase(albumRepo),
+			presenters.NewAlbumAllPresenter(),
+			usecases.NewAlbumGetByIDUsecase(albumRepo),
+			presenters.NewAlbumGetByIDPresenter(),
+			usecases.NewAlbumCreateUsecase(albumRepo),
+			presenters.NewAlbumCreatePresenter(),
+			usecases.NewAlbumClearUsecase(albumRepo),
 			presenters.NewAlbumClearPresenter(),
 		)
 
-		api.GET("/album", ac.GetAll)
-		api.GET("/album/:id", ac.GetById)
-		api.POST("/album", ac.Post)
-		api.PATCH("/album/clear", ac.Clear)
+		api.GET("/album", albumCtrl.GetAll)
+		api.GET("/album/:id", albumCtrl.GetById)
+		api.POST("/album", albumCtrl.Post)
+		api.PATCH("/album/clear", albumCtrl.Clear)
 
-		sr := dbs.NewSongMysql(db)
+		songRepo := dbs.NewSongMysql(db)
 
-		sac := usecases.NewSongAllUsecase(sr)
-		sap := presenters.NewSongAllPresenter()
-		sgbiu := usecases.NewSongGetByIDUsecase(sr)
-		sgbip := presenters.NewSongGetByIDPresenter()
-		scc := usecases.NewSongCreateUsecase(sr)
-		scp := presenters.NewSongCreatePresenter()
-
-		sc := controllers.NewSongController(
-			sac,
-			sap,
-			sgbiu,
-			sgbip,
-			scc,
-			scp,
-			usecases.NewSongClearUsecase(sr),
+		songCtrl := controllers.NewSongController(
+			usecases.NewSongAllUsecase(songRepo),
+			presenters.NewSongAllPresenter(),
+			usecases.NewSongGetByIDUsecase(songRepo),
+			presenters.NewSongGetByIDPresenter(),
+			usecases.NewSongCreateUsecase(songRepo),
+			presenters.NewSongCreatePresenter(),
+			usecases.NewSongClearUsecase(songRepo),
 			presenters.NewSongClearPresenter(),
 		)
 
-		api.GET("/song", sc.GetAll)
-		api.GET("/song/:id", sc.GetById)
-		api.POST("/song", sc.Post)
-		api.PATCH("/song/clear", sc.Clear)
+		api.GET("/song", songCtrl.GetAll)
+		api.GET("/song/:id", songCtrl.GetById)
+		api.POST("/song", songCtrl.Post)
+		api.PATCH("/song/clear", songCtrl.Clear)
 
 		artistRepo := dbs.NewArtistMysql(db)
 
-		artistAllU := usecases.NewArtistAllUsecase(artistRepo)
-		artistAllP := presenters.NewArtistAllPresenter()
-		artistCreateU := usecases.NewArtistGetByIDUsecase(artistRepo)
-		artistCreateP := presenters.NewArtistGetByIDPresenter()
-		artistGetByIDU := usecases.NewArtistCreateUsecase(artistRepo)
-		artistGetByIDP := presenters.NewArtistCreatePresenter()
-
 		artistCtrl := controllers.NewArtistController(
-			artistAllU,
-			artistAllP,
-			artistCreateU,
-			artistCreateP,
-			artistGetByIDU,
-			artistGetByIDP,
+			usecases.NewArtistAllUsecase(artistRepo),
+			presenters.NewArtistAllPresenter(),
+			usecases.NewArtistGetByIDUsecase(artistRepo),
+			presenters.NewArtistGetByIDPresenter(),
+			usecases.NewArtistCreateUsecase(artistRepo),
+			presenters.NewArtistCreatePresenter(),
 			usecases.NewArtistClearUsecase(artistRepo),
 			presenters.NewArtistClearPresenter(),
 		)
