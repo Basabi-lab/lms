@@ -52,9 +52,9 @@ func doPatchClear(url string) (*http.Request, error) {
 }
 
 func (a *accessor) ClearAll() error {
-	artistClear := a.Host + "/artist/clear"
-	albumClear := a.Host + "/album/clear"
-	songClear := a.Host + "/song/clear"
+	artistClear := a.Host + "/api/artist/clear"
+	albumClear := a.Host + "/api/album/clear"
+	songClear := a.Host + "/api/song/clear"
 
 	_, err := doPatchClear(artistClear)
 	if err != nil {
